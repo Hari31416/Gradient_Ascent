@@ -1,13 +1,13 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Some Simple Blogs',
+  title: 'Gradient Ascent',
   author: 'Harikesh Kushwaha',
-  headerTitle: 'Blogs',
+  headerTitle: 'Gradienr Ascent',
   description: 'A blog for machine learning, deep learning, and data science enthusiasts.',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://hari31416.github.io/Gradient_Ascent/',
+  siteRepo: 'https://github.com/Hari31416/Gradient_Ascent',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
   // mastodon: 'https://mastodon.social/@mastodonuser',

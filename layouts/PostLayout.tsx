@@ -30,8 +30,9 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { filePath, path, slug, date, title, tags, images } = content
   const basePath = path.split('/')[0]
+  const displayImage = images && images.length > 0 ? images[0] : ''
 
   return (
     <SectionContainer>
@@ -50,6 +51,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   </dd>
                 </div>
               </dl>
+              {displayImage && (
+                <div className="relative aspect-[2/1] w-full">
+                  <Image src={displayImage} alt={title} fill className="object-cover" />
+                </div>
+              )}
               <div>
                 <PageTitle>{title}</PageTitle>
               </div>
@@ -74,15 +80,15 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                       <dl className="whitespace-nowrap text-sm font-medium leading-5">
                         <dt className="sr-only">Name</dt>
                         <dd className="text-gray-900 dark:text-gray-100">{author.name}</dd>
-                        <dt className="sr-only">Twitter</dt>
+                        <dt className="sr-only">Github</dt>
                         <dd>
-                          {author.twitter && (
+                          {author.github && (
                             <Link
-                              href={author.twitter}
+                              href={author.github}
                               className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                             >
-                              {author.twitter
-                                .replace('https://twitter.com/', '@')
+                              {author.github
+                                .replace('https://github.com/', '@')
                                 .replace('https://x.com/', '@')}
                             </Link>
                           )}

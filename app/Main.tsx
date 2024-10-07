@@ -13,7 +13,7 @@ export default function Home({ posts }) {
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div
           className="flex aspect-[3.5/1] w-full flex-col justify-end bg-cover bg-center md:space-y-5"
-          style={{ backgroundImage: "url('/static/images/banner_no_bg.png')" }}
+          style={{ backgroundImage: `url(${siteMetadata.bannerImageUrl})` }}
         >
           <p className="text-xl leading-9 tracking-tight sm:text-xl sm:leading-10 md:text-2xl md:leading-14">
             {siteMetadata.description}

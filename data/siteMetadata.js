@@ -2,7 +2,7 @@
 const siteMetadata = {
   title: 'Gradient Ascent',
   author: 'Harikesh Kushwaha',
-  headerTitle: 'Gradienr Ascent',
+  headerTitle: 'Gradient Ascent of Knowledge',
   description: 'A blog for machine learning, deep learning, and data science enthusiasts.',
   language: 'en-us',
   theme: 'system', // system, dark or light
@@ -10,16 +10,11 @@ const siteMetadata = {
   siteRepo: 'https://github.com/Hari31416/Gradient_Ascent',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
-  // mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'harikeshkumar0926@gmail.com',
   github: 'https://github.com/hari31416',
   x: 'https://twitter.com/hari31416',
-  // twitter: 'https://twitter.com/Twitter',
   facebook: 'https://facebook.com/hari31416',
-  // youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com/in/hari31416/',
-  // threads: 'https://www.threads.net',
-  // instagram: 'https://www.instagram.com',
   locale: 'en-US',
   // set to true if you want a navbar fixed to the top
   stickyNav: false,

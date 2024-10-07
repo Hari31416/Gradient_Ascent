@@ -11,13 +11,16 @@ export default function Home({ posts }) {
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Latest
-          </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+        <div
+          className="flex aspect-[3.5/1] w-full flex-col justify-end bg-cover bg-center md:space-y-5"
+          style={{ backgroundImage: "url('/static/images/banner_no_bg.png')" }}
+        >
+          <p className="text-xl leading-9 tracking-tight sm:text-xl sm:leading-10 md:text-2xl md:leading-14">
             {siteMetadata.description}
           </p>
+          <h1 className="pb-2 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+            Latest
+          </h1>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}

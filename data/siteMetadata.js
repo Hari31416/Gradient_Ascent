@@ -9,7 +9,7 @@ const siteMetadata = {
   siteUrl: 'https://hari31416.github.io/Gradient_Ascent/',
   siteRepo: 'https://github.com/Hari31416/Gradient_Ascent',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/images/banner_no_bg.png`,
   bannerImageUrl: `${process.env.BASE_PATH || ''}/static/images/banner_no_bg.png`,
   email: 'harikeshkumar0926@gmail.com',
   github: 'https://github.com/hari31416',

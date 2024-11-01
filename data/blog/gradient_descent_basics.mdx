@@ -1,47 +1,542 @@
 ---
-title: 'Gradient Descent'
-date: '2024-10-12'
+title: 'An Introduction to Gradient Descent'
+date: '2024-11-01'
 tags: ['ml', 'maths', 'how-to']
 draft: false
 summary: 'A beginner-friendly guide to understanding gradient descent, a fundamental optimization algorithm used in machine learning.'
 images: ['/static/images/gradient_descent_basics/banner.png']
-layout: PostLayout
+layout: PostBanner
 ---
 
 <TOCInline toc={props.toc} exclude="Introduction" />
 
-# Intoduction
+# Introduction
 
-Gradient Descent (GD) is a fundamental optimization algorithm used in machine learning to minimize a function. It is used to find the minimum of a function by iteratively moving in the direction of the steepest descent. GD is the _secret sauce_ behind the success of many machine learning algorithms and neural networks.
+Gradient Descent (GD) is a fundamental optimization algorithm used in machine learning to minimize a function. It is used to find the minimum of a function by iteratively moving toward the steepest descent. GD is the *secret sauce* behind the success of many machine learning algorithms and neural networks.
 
 GD works by taking small steps in the direction of the negative gradient of the function. Mathematically, it can be expressed as:
 
 $$
-\theta_{t+1} = \theta_t - \alpha \nabla f(\theta_t)
+\theta_{t+1} = \theta_t - \alpha \nabla f(\theta_t) \tag{1}
 $$
 
-To understand what this equation and the various terms mean, we have to start from the basics.
+We need to start from the basics to understand what this equation and the various terms mean.
 
 # Preliminary
 
+One does not need much academic knowledge to understand the GD algorithm. This section introduces some basic concepts that will help us understand the algorithm better.
+
 ## Function
 
-## Derivative and Gradient
+A function is just a mapping with a condition that each input must be mapped to only one output. We can treat a function like a machine that, given a specific input(s), returns specific output(s). These inputs and outputs can be anything from natural numbers to vectors of complex numbers. Formally, a function from a set $X$ to a set $Y$ assigns to each element of $X$ exactly one element of $Y$. The set $X$ is called the domain of the function and the set $Y$ is called the codomain of the function.[^1]
+
+For example, we can define a function that always returns the square of what was passed to it. Assuming that we pass a real number, the function is written as:
+
+$$
+ y = x^2
+$$
+
+with $x\in \mathbb{R}$ and $y\in \mathbb{R^+}$. Note that the output is always a positive number and hence the codomain of the function is the set of positive real numbers.
+
+## Derivative
+
+Derivative is a measure of how a function changes as its input changes. It gives the rate of change of the function at a particular point. From a geometric point of view, the derivative of a function at a point is the slope of the tangent line to the function at that point. For a function of more than one variable, we are more interested in what is known as _partial derivatives_. The partial derivative of a multivariate function with respect to a variable is the derivative of the function where all the variables are assumed to be constant.
+
+Let’s talk about some notations. The derivative of a univariate function $f(x)$ is denoted as $f'(x)$ or $\frac{f(x)}{dx}$. For a multivariate function $F(x, y)$, the partial derivative of the function with one of its variables, say $x$ can be written as $F_x(x,y)$ or $\frac{\partial F(x, y)}{\partial x}$.
+
+## Gradient
+
+The gradient is just a special case of derivative. It is the slope of a curve at a given point in a specified direction. For a univariate function, the gradient is equal to the function's derivative at that point. For multivariate function, it is defined as:
+
+$$
+\nabla F(p)={\begin{bmatrix}{\frac {\partial F}{\partial x_{1}}}(p)\\\vdots \\{\frac {\partial F}{\partial x_{n}}}(p)\end{bmatrix}}
+$$
+
+Here, $p$ is the point of interest.
 
 # Requirements for GD
 
-## Differentiablity
+For a GD algorithm to work, the function needs to satisfy two key requirements. The function should be:
+
+1. differentiable, and
+2. convex
+
+## Differentiability
+
+A function is differentiable if it has a derivative at all points of its domain. The following are some examples of functions that are differentiable.
+
+<img
+  src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/images/differentiable_funcs.png"
+  alt="Some Differentiable Functions"
+/>
+
+Not all functions are differentiable. Here are some examples of non-differentiable functions.
+
+<img
+  src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/images/non_differentiable_funcs.png"
+  alt="Some non-Differentiable Functions"
+/>
 
 ## Convexity
 
+Geometrically speaking, for a function of a single variable to be convex, the line connecting any two points on the curve must be on or above the curve. The same is also true of a convex function of more than one variable, if we replace the _line_ to a high-dimensional representation of a line (for example, in 3D, it will be a place) and the _two points_ to a set of points.
+
+Mathematically, a function $f(x)$ is said to be convex, if for $0\le t\le 1$ and $x_1, x_2$ in domain of $f$, the following condition hold[^2]:
+
+$$
+{\displaystyle f\left(tx_{1}+(1-t)x_{2}\right)\leq tf\left(x_{1}\right)+(1-t)f\left(x_{2}\right)}
+$$
+
+Some examples are:
+
+<figure>
+  <img
+    src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/images/convex_funcs.png"
+    alt="Some Convex Functions"
+  />
+  <figcaption>Some Convex Functions</figcaption>
+</figure>
+
+<figure>
+  <video controls class="md:w-3/4">
+    <source
+      src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/convex_function.mp4"
+      type="video/mp4"
+    />
+  </video>
+  <figcaption>
+    For a convex function, the line between a fixed point and any other point on the curve always
+    remains above the curve. The result will remain unchanged even if one changes the fixed point.
+  </figcaption>
+</figure>
+
+A straightforward way to check if a univariate function is convex is to calculate the second derivative and check if its value is always bigger than 0.
+
+$$
+\frac{d^2f}{dx^2} \gt 0
+$$
+
+Of course, not all functions are convex.
+
+<figure>
+  <img
+    src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/images/non_convex_funcs.png"
+    alt="Some functions that are not convex"
+  />
+  <figcaption>Some functions that are not convex.</figcaption>
+</figure>
+
+There are some functions that are convex in some domains and non-convex (concave) in other domains. These are called quasi-convex functions. GD algorithm works on these types of functions too. However, these functions contain some points, called saddle points, where the convexity of the function changes, and the GD can get stuck on these points (as we will see later). One example of such a function is $f(x) = 2x^4 - 3x^3 + 1$. By taking the second derivative, one can verify that this function has a saddle point at $x = 0$ and it is:
+
+- convex for $x<0$
+- concave for $0<x<\frac{2}{3}$
+- convex again for $x > \frac{2}{3}$
+
+<figure>
+  <img
+    className="md:w-3/4"
+    src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/images/quasi_convex_function.png"
+    alt="Quasi convex function"
+  />
+  <figcaption>
+    The quasi-convex function $f(x) = 2x^4 - 3x^3 + 1$. The saddle point is shown as a red dot. The
+    region where the function is concave is shaded.
+  </figcaption>
+</figure>
+
+<figure>
+  <video controls class="md:w-3/4">
+    <source
+      src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/quasi_convex_function.mp4"
+      type="video/mp4"
+    />
+  </video>
+  <figcaption>
+    The animation shows why the function is not convex. Note that the line connecting the two points
+    does not always remain above the curve. The line color turns red when it lies below the curve
+    (which happens between $x = 1$ and $x = 2/3$). As the second point moves from right to left, the
+    text indicating whether the point lies in the convex or non-convex zone also changes.
+  </figcaption>
+</figure>
+
+# The Algorithm
+
+Now that we have a basic understanding of the terms, we are ready to understand the equation (1). Let $f(\theta)$ be a function with parameters $\theta$ that we need to optimize. Note that $\theta$ can be a scalar or a vector. For this, the GD algorithm is:
+
+1. Initialize the parameters $\theta$ with some random values, say $\theta_0$.
+2. Calculate the gradient $\nabla f(\theta_0)$.
+3. Update the parameters using the relation $\theta_{1} = \theta_0 - \alpha \nabla f(\theta_0)$.
+4. Repeat steps 2 and 3 by changing $\theta_0$ to $\theta_1$ ,$\theta_1$ to $\theta_2$ and so on.
+5. Break if a specified condition is met. The most common conditions are:
+   1. Define a number $n$ (number of iterations), which denotes the number of times steps 2 and 3 are repeated and break when $n$ is reached,
+   2. Define a small number $\epsilon$ (threshold) and break when $||\theta_{t+1} - \theta_t|| < \epsilon$, that is, break when the parameters stop changing significantly.
+
+Here is a pseudo-code for the GD algorithm:
+
+```python showLineNumbers
+alpha = 0.01
+n = 100
+eps = 1e-6
+
+theta_0 = 0
+for i in range(n):
+	grad = grad_func(theta_0)
+	theta = theta_0 - alpha*grad
+	delta = norm(theta - theta_0)
+	theta_0 = theta
+	if delta < eps:
+		print("GD Converged")
+		return theta
+
+print("GD Not converged")
+return theta
+```
+
+<details>
+<summary>A Complete Implementation in Python with NumPy</summary>
+
+```python showLineNumbers
+import numpy as np
+from typing import Callable, Optional, Union, Dict, Tuple
+
+
+class GradientDescent:
+    """Implements the gradient descent algorithm.
+
+    Attributes
+    ----------
+    func : Callable
+        The function to be minimized.
+    grad_func : Callable
+        The gradient of the function. Either `func` or `grad_func` must be provided.
+
+    Methods
+    -------
+    optimize(start=None, lr=0.1, max_iter=100, eps=1e-6)
+        Optimize the function using gradient descent
+    """
+
+    def __init__(
+        self,
+        func: Optional[Callable],
+        grad_func: Optional[Callable],
+    ):
+        if func is None and grad_func is None:
+            raise ValueError("Either func or grad_func must be provided")
+
+        self.func = func
+        self.grad_func = grad_func
+
+    def _get_gradient(self, x: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+        if self.grad_func is not None:
+            return self.grad_func(x)
+        else:
+            # use central difference if gradient is not provided
+            eps = 1e-5
+            return (self.func(x + eps) - self.func(x - eps)) / (2 * eps)
+
+    def optimize(
+        self,
+        start: Union[float, np.ndarray] = None,
+        lr: float = 0.1,
+        max_iter: int = 100,
+        eps: float = 1e-6,
+        shape: Optional[Tuple[int]] = None,
+    ) -> Tuple[Union[float, np.ndarray], Dict]:
+        """Optimize the function using gradient descent.
+
+        Parameters
+        ----------
+        start : Union[float, np.ndarray]
+            The starting point for the optimization.
+        lr : float
+            The learning rate.
+        max_iter : int
+            The maximum number of iterations
+        eps : float
+            The convergence threshold.
+        shape : Tuple[int]
+            The shape of the starting point if it is not provided. If start is provided, this is ignored, otherwise a random array with this shape is generated. If neither start nor shape is provided, a random float is generated.
+
+        Returns
+        -------
+        Union[float, np.ndarray]
+            The optimized value of x.
+        Dict
+            A dictionary containing the history of the optimization.
+        """
+        history = []
+
+        # generate random starting point if not provided
+        if start is None:
+            # if shape is provided, generate random array with that shape
+            if shape is not None:
+                x = np.random.randn(*shape)
+            # otherwise, generate random float
+            else:
+                x = np.random.randn()
+        else:
+            x = start
+
+        # iterate until convergence
+        converged = False
+        for i in range(max_iter):
+            # get gradient
+            grad = self._get_gradient(x)
+            # calculate delta that needs to be subtracted from x
+            delta = lr * grad
+
+            # convert delta to numpy array if it is not already
+            # this is done to allow for both scalar and array inputs
+            if not isinstance(delta, np.ndarray):
+                delta = np.array([delta])
+
+            # check for convergence, break if converged
+            if np.linalg.norm(delta) < eps:
+                converged = True
+                print(f"Converged in {i} iterations. Breaking...")
+                break
+
+            # do the same for x
+            if not isinstance(x, np.ndarray):
+                x = np.array([x])
+
+            # update x
+            x = x - delta
+
+            # save history
+            hist = {"x": x, "grad": grad}
+            history.append(hist)
+
+        if not converged:
+            print(f"Not converged after {max_iter} iterations.")
+
+        return x, history
+```
+
+</details>
+
 # Examples
 
-## Example 1 (Convex)
+We will have a look at a couple of examples. The first example will be a univariate function and the second will be a function of two variables. Both functions are convex.
 
-## Example 2 (Semi Convex)
+## A Function with One Variable
+
+Let us take a function:
+
+$$
+f(x) = x^2 -2x + 1
+$$
+
+The derivative of the function is:
+
+$$
+f'(x) = 2x - 2
+$$
+
+One can easily verify that it is a convex function as $f''(x) = 2 > 0$. The actual global minima of the function can be determined by setting $f'(x) = 2x -2$ to zero, which gives $x = 1$. Now, we will try to get the same result using GD.
+
+Following the algorithm, we initialize $x$ with 3. Using the learning rate $\alpha = 0.3$, $n = 50$ and $\epsilon = 0.001$. So,
+
+$$
+f'(3) = 2\times 3 -2 = 4
+$$
+
+This gives
+
+$$
+x = 3 - 0.3\times 4 = 1.8 \tag{a}
+$$
+
+This is the new value of $x$ which should be (hopefully) closer to the global minimum. Repeating the steps:
+
+$$
+f'(1.8) = 2\times1.8 - 2 = 1.6\\
+x = 1.8 - 0.3\times 1.6 = 1.32 \tag{b}
+$$
+
+$$
+f'(1.32) = 2\times1.32 - 2 = 0.64\\
+x = 1.32 - 0.3\times 0.64 = 1.128 = 1.13 \tag{c}
+$$
+
+Continuing the same way, we will get $x = 1.05$, $x = 1.02$, $x = 1.01$ and finally $x=1.00$. Since $\epsilon = 0.001$, we do not need to descend any more steps.
+
+<figure>
+  <video controls class="md:w-3/4">
+    <source
+      src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/gd_on_convex_function.mp4"
+      type="video/mp4"
+    />
+  </video>
+  <figcaption>
+    Using $\epsilon = 0.001$, GD is able to find the minimum of the function $f(x) = x^2 -2x + 1$ in
+    just 8 steps.
+  </figcaption>
+</figure>
+
+## A Function with Two Variable
+
+For this case, we will be using the function:
+
+$$
+f = (x-1)^2 + (y-2)^2
+$$
+
+The gradient of the function is:
+
+$$
+\nabla f =  \begin{bmatrix}           2(x-1) \\
+2(y-2)
+\end{bmatrix}
+$$
+
+A simple calculation will show that the function is convex and the global minimum is $\begin{bmatrix}1\\2
+\end{bmatrix}$.
+
+To find out the minimum using GD, we will start from the point $x = \begin{bmatrix}-1\\-1
+\end{bmatrix}$. We will choose $\alpha = 0.2$, $n = 50$ and $\epsilon = 0.001$. Some steps of the GD algorithm are:
+
+$$
+\nabla f =  \begin{bmatrix}           2(x-1) \\
+2(y-2)
+\end{bmatrix} =\begin{bmatrix}           -4 \\
+-6
+\end{bmatrix}\\x = \begin{bmatrix}           -0.2 \\
+0.2
+\end{bmatrix}\tag{a}
+$$
+
+$$
+\nabla f =  \begin{bmatrix}           2(x-1) \\
+2(y-2)
+\end{bmatrix} =\begin{bmatrix}           -2.4 \\
+-3.6
+\end{bmatrix}\\x = \begin{bmatrix}           0.28 \\
+0.92
+\end{bmatrix} \tag{b}
+$$
+
+$$
+\nabla f =  \begin{bmatrix}           2(x-1) \\
+2(y-2)
+\end{bmatrix} =\begin{bmatrix}           -1.44 \\
+-2.16
+\end{bmatrix}\\x = \begin{bmatrix}           0.568 \\
+1.352
+\end{bmatrix}\tag{c}
+$$
+
+Continuing, the GD algorithm converges after 15 steps with a final value of $x = \begin{bmatrix}1\\2
+\end{bmatrix}$.
+
+<figure>
+  <video controls class="md:w-3/4">
+    <source
+      src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/gd_for_multivariables.mp4"
+      type="video/mp4"
+    />
+  </video>
+  <figcaption>
+    The Above calculation is animated here. The function converges in 15 steps.
+  </figcaption>
+</figure>
 
 # Limitations and Challenges
 
+Gradient descent in its vanilla form (in the form that we have discussed) has a lot of limitations that make it unsuitable for most of the cases. Some of the limitations are discussed in this section.
+
+## Limited Set of Functions
+
+GD can only be applied to functions that are both differentiable and convex. Though it can be made to work on a quasi-convex function, the presence of saddle points in such a function means that GD is not guaranteed to converge to global minima. Wrong initialization or learning rate can result in the model converging to saddle point or local minima.
+
+<figure>
+  <video controls class="md:w-3/4">
+    <source
+      src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/non_convex_local_minima.mp4"
+      type="video/mp4"
+    />
+  </video>
+  <figcaption>
+    The starting point, $x = -0.25$, is near the saddle point. This results in GD converging to the
+    saddle point. Vanishing gradient can also be observed here. As the point reaches near the saddle
+    point, the gradient becomes closer and closer to zero, making it impossible for the algorithm to
+    bypass the saddle point and reach the global minimum.
+  </figcaption>
+</figure>
+
+## Vanishing and Exploding Gradients
+
+A vanishing gradient occurs when the gradient of the function at the point of interest is zero or very close to zero. In this situation, the algorithm gets stuck to that point, instead of finding the global minimum. This usually happens at the saddle point(s).
+
+Exploding gradient, on the other hand, occurs when the gradient becomes very large. This usually happens when the learning rate is very high.
+
+## Learning Rate
+
+Choosing a good learning rate is a must for GD to converge. Using too low a learning rate will result in the algorithm reaching minima very slowly, taking a large number of steps. Using too large a learning rate will also not work. In the best case, the algorithm might oscillate about the minima before converging to it. In the worst case, it might overshoot the global minimum, or keep on oscillating about it indefinitely.
+
+<figure>
+  <video controls class="md:w-3/4">
+    <source
+      src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/non_convex_high_lr.mp4"
+      type="video/mp4"
+    />
+  </video>
+  <figcaption>
+    A high learning rate is making the algorithm oscillate back and forth the global minimum,
+    indefinitely.
+  </figcaption>
+</figure>
+
+<div class="flex flex-wrap">
+  <div class="w-full p-2 lg:w-1/3">
+    <video controls class="w-full">
+      <source
+        src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/convex_low_lr.mp4"
+        type="video/mp4"
+      />
+    </video>
+  </div>
+  <div class="w-full p-2 lg:w-1/3">
+    <video controls class="w-full">
+      <source
+        src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/convex_medium_lr.mp4"
+        type="video/mp4"
+      />
+    </video>
+  </div>
+  <div class="w-full p-2 lg:w-1/3">
+    <video controls class="w-full">
+      <source
+        src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/convex_high_lr.mp4"
+        type="video/mp4"
+      />
+    </video>
+  </div>
+  <div class="-mt-10">
+    <small class="text-center">
+      The number of iterations required for GD to converge varies wildly on the learning rate. (27
+      for 0.1, 16 for 0.8 but only 5 for 0.4). Using a large learning rate (0.8) results in the
+      algorithm or oscillation before reaching the global minimum.
+    </small>
+  </div>
+</div>
+
+Most of these issues are resolved by clever techniques like momentum, adaptive learning rates, and better initializations. I plan to write another article in the future, addressing advanced gradient-based optimization methods. Meanwhile, you can have a look at [this article](https://www.ruder.io/optimizing-gradient-descent) which provides a good overview of the various optimization algorithms.
+
 # Summary
 
+This article covers the basics of the gradient descent algorithm. We started with the GD equation and discussed the meaning of the various parts of the equation. Next, we discussed the requirements that a function must satisfy for the GD to work. It was followed by the algorithm itself and two examples where we used the algorithm to find the global minimum of a function of one variable and a function of two variables. Finally, we discussed some of the limitations of the algorithm. I hope this article will be a good starting point for the various advanced gradient-based optimization algorithms.
+
 # Sources
+
+- [Wikipedia: Function (mathematics)](<https://en.wikipedia.org/wiki/Function_(mathematics)>)
+- [Wikipedia: Convex function](https://en.wikipedia.org/wiki/Convex_function)
+- [Gradient Descent Algorithm — a deep dive](https://towardsdatascience.com/gradient-descent-algorithm-a-deep-dive-cf04e8115f21)
+- [CS231n Convolutional Neural Networks for Visual Recognition](https://cs231n.github.io/neural-networks-3/)
+- [An overview of gradient descent optimization algorithms](https://www.ruder.io/optimizing-gradient-descent/)
+- [Code and static file related to the article](https://github.com/Hari31416/blog_scripts/tree/main/gradient_descent_basics)
+
+[^1]: [Wikipedia: Function (mathematics)](<https://en.wikipedia.org/wiki/Function_(mathematics)>)
+
+[^2]: [Wikipedia: Convex function](https://en.wikipedia.org/wiki/Convex_function)

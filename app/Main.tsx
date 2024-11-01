@@ -6,7 +6,7 @@ import NewsletterForm from 'pliny/ui/NewsletterForm'
 import Image from '@/components/Image'
 import { GA } from 'pliny/analytics/GoogleAnalytics'
 
-const googleAnalyticsId = siteMetadata.analytics.googleAnalytics.googleAnalyticsId
+const googleAnalyticsId = 'G-61Z6WVZ6PN'
 
 const MAX_DISPLAY = 5
 

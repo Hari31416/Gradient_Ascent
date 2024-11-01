@@ -15,7 +15,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
 import { GA } from 'pliny/analytics/GoogleAnalytics'
 
-const googleAnalyticsId = siteMetadata.analytics.googleAnalytics.googleAnalyticsId
+const googleAnalyticsId = 'G-61Z6WVZ6PN'
 
 const defaultLayout = 'PostLayout'
 const layouts = {

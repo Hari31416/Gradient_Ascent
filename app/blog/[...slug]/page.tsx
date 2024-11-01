@@ -13,6 +13,9 @@ import PostBanner from '@/layouts/PostBanner'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
+import { GA } from 'pliny/analytics/GoogleAnalytics'
+
+const googleAnalyticsId = siteMetadata.analytics.googleAnalytics.googleAnalyticsId
 
 const defaultLayout = 'PostLayout'
 const layouts = {
@@ -108,6 +111,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
 
   return (
     <>
+      <GA googleAnalyticsId={googleAnalyticsId} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

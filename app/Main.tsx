@@ -4,12 +4,16 @@ import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
 import Image from '@/components/Image'
+import { GA } from 'pliny/analytics/GoogleAnalytics'
+
+const googleAnalyticsId = siteMetadata.analytics.googleAnalytics.googleAnalyticsId
 
 const MAX_DISPLAY = 5
 
 export default function Home({ posts }) {
   return (
     <>
+      <GA googleAnalyticsId={googleAnalyticsId} />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div
           className="flex aspect-[3.5/1] w-full flex-col justify-end bg-cover bg-center md:space-y-5"

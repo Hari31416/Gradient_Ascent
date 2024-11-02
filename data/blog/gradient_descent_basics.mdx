@@ -8,7 +8,10 @@ images: ['/static/images/gradient_descent_basics/banner.png']
 layout: PostBanner
 ---
 
-<TOCInline toc={props.toc} exclude="Introduction" />
+<details className="mb-5 text-lg font-bold">
+  <summary>Table of Contents</summary>
+  <TOCInline toc={props.toc} exclude="Introduction" />
+</details>
 
 # Introduction
 
@@ -98,7 +101,7 @@ Some examples are:
 </figure>
 
 <figure>
-  <video controls class="md:w-3/4">
+  <video controls className="md:w-3/4">
     <source
       src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/convex_function.mp4"
       type="video/mp4"
@@ -145,7 +148,7 @@ There are some functions that are convex in some domains and non-convex (concave
 </figure>
 
 <figure>
-  <video controls class="md:w-3/4">
+  <video controls className="md:w-3/4">
     <source
       src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/quasi_convex_function.mp4"
       type="video/mp4"
@@ -192,7 +195,7 @@ print("GD Not converged")
 return theta
 ```
 
-<details>
+<details className="mb-5 text-lg font-bold">
 <summary>A Complete Implementation in Python with NumPy</summary>
 
 ```python showLineNumbers
@@ -363,7 +366,7 @@ $$
 Continuing the same way, we will get $x = 1.05$, $x = 1.02$, $x = 1.01$ and finally $x=1.00$. Since $\epsilon = 0.001$, we do not need to descend any more steps.
 
 <figure>
-  <video controls class="md:w-3/4">
+  <video controls className="md:w-3/4">
     <source
       src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/gd_on_convex_function.mp4"
       type="video/mp4"
@@ -431,7 +434,7 @@ Continuing, the GD algorithm converges after 15 steps with a final value of $x =
 \end{bmatrix}$.
 
 <figure>
-  <video controls class="md:w-3/4">
+  <video controls className="md:w-3/4">
     <source
       src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/gd_for_multivariables.mp4"
       type="video/mp4"
@@ -451,7 +454,7 @@ Gradient descent in its vanilla form (in the form that we have discussed) has a 
 GD can only be applied to functions that are both differentiable and convex. Though it can be made to work on a quasi-convex function, the presence of saddle points in such a function means that GD is not guaranteed to converge to global minima. Wrong initialization or learning rate can result in the model converging to saddle point or local minima.
 
 <figure>
-  <video controls class="md:w-3/4">
+  <video controls className="md:w-3/4">
     <source
       src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/non_convex_local_minima.mp4"
       type="video/mp4"
@@ -476,7 +479,7 @@ Exploding gradient, on the other hand, occurs when the gradient becomes very lar
 Choosing a good learning rate is a must for GD to converge. Using too low a learning rate will result in the algorithm reaching minima very slowly, taking a large number of steps. Using too large a learning rate will also not work. In the best case, the algorithm might oscillate about the minima before converging to it. In the worst case, it might overshoot the global minimum, or keep on oscillating about it indefinitely.
 
 <figure>
-  <video controls class="md:w-3/4">
+  <video controls className="md:w-3/4">
     <source
       src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/non_convex_high_lr.mp4"
       type="video/mp4"
@@ -488,33 +491,33 @@ Choosing a good learning rate is a must for GD to converge. Using too low a lear
   </figcaption>
 </figure>
 
-<div class="flex flex-wrap">
-  <div class="w-full p-2 lg:w-1/3">
-    <video controls class="w-full">
+<div className="flex flex-wrap">
+  <div className="w-full p-2 md:w-3/4 lg:w-1/3">
+    <video controls className="w-full">
       <source
         src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/convex_low_lr.mp4"
         type="video/mp4"
       />
     </video>
   </div>
-  <div class="w-full p-2 lg:w-1/3">
-    <video controls class="w-full">
+  <div className="w-full p-2 md:w-3/4 lg:w-1/3">
+    <video controls className="w-full">
       <source
         src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/convex_medium_lr.mp4"
         type="video/mp4"
       />
     </video>
   </div>
-  <div class="w-full p-2 lg:w-1/3">
-    <video controls class="w-full">
+  <div className="w-full p-2 md:w-3/4 lg:w-1/3">
+    <video controls className="w-full">
       <source
         src="https://raw.githubusercontent.com/Hari31416/blog_scripts/main/gradient_descent_basics/videos/convex_high_lr.mp4"
         type="video/mp4"
       />
     </video>
   </div>
-  <div class="-mt-10">
-    <small class="text-center">
+  <div className="-mt-10">
+    <small className="text-center">
       The number of iterations required for GD to converge varies wildly on the learning rate. (27
       for 0.1, 16 for 0.8 but only 5 for 0.4). Using a large learning rate (0.8) results in the
       algorithm or oscillation before reaching the global minimum.

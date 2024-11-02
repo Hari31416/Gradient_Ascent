@@ -31,7 +31,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
             <div className="relative pt-10">
               <PageTitle>{title}</PageTitle>
             </div>
-            <div className="mx-auto w-3/4 items-center justify-center">
+            <div className="mx-auto items-center justify-center md:w-3/4">
               <Bleed>
                 <div className="relative aspect-[2/1] w-full">
                   <Image src={displayImage} alt={title} fill className="object-cover" />

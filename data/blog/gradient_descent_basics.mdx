@@ -1,6 +1,6 @@
 ---
 title: 'An Introduction to Gradient Descent'
-date: '2024-11-01'
+date: '2024-11-02'
 tags: ['ml', 'maths', 'how-to']
 draft: false
 summary: 'A beginner-friendly guide to understanding gradient descent, a fundamental optimization algorithm used in machine learning.'
@@ -15,15 +15,15 @@ layout: PostBanner
 
 # Introduction
 
-Gradient Descent (GD) is a fundamental optimization algorithm used in machine learning to minimize a function. It is used to find the minimum of a function by iteratively moving toward the steepest descent. GD is the *secret sauce* behind the success of many machine learning algorithms and neural networks.
+Gradient Descent (GD) is a fundamental optimization algorithm used to find the minimum of a function. In machine learning, it's often applied to optimize a loss function by iteratively moving toward the direction of steepest descent. GD is the *secret sauce* behind the success of many machine learning algorithms and neural networks.
 
 GD works by taking small steps in the direction of the negative gradient of the function. Mathematically, it can be expressed as:
 
 $$
-\theta_{t+1} = \theta_t - \alpha \nabla f(\theta_t) \tag{1}
+\theta_{t+1} = \theta_t - \alpha \nabla f(\theta_t)
 $$
 
-We need to start from the basics to understand what this equation and the various terms mean.
+Let's start from the basics to better understand what the various terms in the equation mean.
 
 # Preliminary
 
@@ -164,7 +164,7 @@ There are some functions that are convex in some domains and non-convex (concave
 
 # The Algorithm
 
-Now that we have a basic understanding of the terms, we are ready to understand the equation (1). Let $f(\theta)$ be a function with parameters $\theta$ that we need to optimize. Note that $\theta$ can be a scalar or a vector. For this, the GD algorithm is:
+Now that we are familiar with the terms used in the GD equation, we are ready to understand the algorithm. Let $f(\theta)$ be a function with parameters $\theta$ that we need to optimize. Note that $\theta$ can be a scalar or a vector. For this, the GD algorithm is:
 
 1. Initialize the parameters $\theta$ with some random values, say $\theta_0$.
 2. Calculate the gradient $\nabla f(\theta_0)$.
@@ -172,7 +172,7 @@ Now that we have a basic understanding of the terms, we are ready to understand 
 4. Repeat steps 2 and 3 by changing $\theta_0$ to $\theta_1$ ,$\theta_1$ to $\theta_2$ and so on.
 5. Break if a specified condition is met. The most common conditions are:
    1. Define a number $n$ (number of iterations), which denotes the number of times steps 2 and 3 are repeated and break when $n$ is reached,
-   2. Define a small number $\epsilon$ (threshold) and break when $||\theta_{t+1} - \theta_t|| < \epsilon$, that is, break when the parameters stop changing significantly.
+   2. Define a small number $\epsilon$ (threshold) and break when $||\theta_{t+1} - \theta_t|| < \epsilon$, that is, break when the parameters stop changing significantly. ($||.||$ denotes the norm of the vector).
 
 Here is a pseudo-code for the GD algorithm:
 
@@ -348,19 +348,19 @@ $$
 This gives
 
 $$
-x = 3 - 0.3\times 4 = 1.8 \tag{a}
+x = 3 - 0.3\times 4 = 1.8 \tag{\text{Step 1}}
 $$
 
 This is the new value of $x$ which should be (hopefully) closer to the global minimum. Repeating the steps:
 
 $$
 f'(1.8) = 2\times1.8 - 2 = 1.6\\
-x = 1.8 - 0.3\times 1.6 = 1.32 \tag{b}
+x = 1.8 - 0.3\times 1.6 = 1.32 \tag{\text{Step 2}}
 $$
 
 $$
 f'(1.32) = 2\times1.32 - 2 = 0.64\\
-x = 1.32 - 0.3\times 0.64 = 1.128 = 1.13 \tag{c}
+x = 1.32 - 0.3\times 0.64 = 1.128 = 1.13 \tag{\text{Step 3}}
 $$
 
 Continuing the same way, we will get $x = 1.05$, $x = 1.02$, $x = 1.01$ and finally $x=1.00$. Since $\epsilon = 0.001$, we do not need to descend any more steps.
@@ -407,7 +407,7 @@ $$
 -6
 \end{bmatrix}\\x = \begin{bmatrix}           -0.2 \\
 0.2
-\end{bmatrix}\tag{a}
+\end{bmatrix}\tag{\text{Step 1}}
 $$
 
 $$
@@ -417,7 +417,7 @@ $$
 -3.6
 \end{bmatrix}\\x = \begin{bmatrix}           0.28 \\
 0.92
-\end{bmatrix} \tag{b}
+\end{bmatrix} \tag{\text{Step 2}}
 $$
 
 $$
@@ -427,7 +427,7 @@ $$
 -2.16
 \end{bmatrix}\\x = \begin{bmatrix}           0.568 \\
 1.352
-\end{bmatrix}\tag{c}
+\end{bmatrix}\tag{\text{Step 3}}
 $$
 
 Continuing, the GD algorithm converges after 15 steps with a final value of $x = \begin{bmatrix}1\\2
@@ -517,10 +517,10 @@ Choosing a good learning rate is a must for GD to converge. Using too low a lear
     </video>
   </div>
   <div className="-mt-10">
-    <small className="text-center">
+    <small className="text-gray-400">
       The number of iterations required for GD to converge varies wildly on the learning rate. (27
-      for 0.1, 16 for 0.8 but only 5 for 0.4). Using a large learning rate (0.8) results in the
-      algorithm or oscillation before reaching the global minimum.
+      steps for 0.1, 16 steps for 0.8 but only 5 steps for 0.4). Using a large learning rate (0.8)
+      results in the algorithm or oscillation before reaching the global minimum.
     </small>
   </div>
 </div>
@@ -529,7 +529,7 @@ Most of these issues are resolved by clever techniques like momentum, adaptive l
 
 # Summary
 
-This article covers the basics of the gradient descent algorithm. We started with the GD equation and discussed the meaning of the various parts of the equation. Next, we discussed the requirements that a function must satisfy for the GD to work. It was followed by the algorithm itself and two examples where we used the algorithm to find the global minimum of a function of one variable and a function of two variables. Finally, we discussed some of the limitations of the algorithm. I hope this article will be a good starting point for the various advanced gradient-based optimization algorithms.
+This article covers the basics of the gradient descent algorithm. We started with the GD equation and discussed the meaning of the various parts of the equation. Next, we discussed the requirements that a function must satisfy for the GD to work. It was followed by the algorithm itself and two examples where we used the algorithm to find the global minimum of a function of one variable and a function of two variables. Finally, we discussed some limitations of the algorithm. I hope this article will be a good starting point for the various advanced gradient-based optimization algorithms.
 
 # Sources
 

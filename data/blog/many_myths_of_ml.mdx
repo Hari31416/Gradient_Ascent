@@ -1,0 +1,49 @@
+---
+title: 'Many Myths of Machine Learning'
+date: '2024-11-15'
+tags: ['ml', 'short_read']
+draft: false
+summary: 'Demythifying some of the most common misconceptions about machine learning.'
+images: ['/static/images/many_myths_of_ml/banner.png']
+layout: PostBanner
+---
+
+<details className="mb-5 text-lg font-bold">
+  <summary>Table of Contents</summary>
+  <TOCInline toc={props.toc} exclude="Introduction" />
+</details>
+
+# Introduction
+
+When working on machine learning problems, one encounters several “facts” that are assumed to be true in every scenario. However, compared to any other field, ML has fewer rules or facts that are guaranteed to work everywhere. So, a rule that works for _your_ use case may not work for _mine_, and hence a more thorough understanding of the said rule is required. This is a series of posts where I try to walk you through some of these _myths_ in the hope that the next time you come across them, you will be better prepared.
+
+# 80-20 Split
+
+One of the first things that you do when starting a machine learning experiment is divide your training data into two parts: a training set to train your model and a testing set to evaluate the performance of the model. For this, you need to decide what split should you use for the training and testing set. The golden rule for this is to use an 80-20 split. Some also suggest ratios like 90-10, 70-30, 60-40, and so on. But where does this ratio come from and in which cases would it work?
+
+To understand this, we need to talk about statistical significance, p-value, and the effect of sample size on these. When conducting a statistical experiment, we are faced with two mutually exclusive hypotheses, the null hypothesis (one which we are trying to disprove) and the alternate hypothesis. Our task is to find sufficient evidence that the null hypothesis is incorrect. In this context, the p-value is the probability that the result obtained did not come only because of the randomness of the taken samples. Thus, a higher p-value indicates that the result might be attributed to the randomness of the sample and hence is less significant. Of course, the lower the p-value, the higher confidence can be given to our experiment. Usually, a p-value of 5%, corresponding to a significant level of 95%, is used in hypothesis testing.
+
+The p-value for an experiment depends on several factors. One of these is the sample size. To understand this, let us do an experiment. Suppose we have a coin and we want to prove that it is not a fair coin. In this case, the null hypothesis is that the coin is fair and the alternate hypothesis is that it is not. To test this, we toss the coin. First time, we observe a head. If the coin were fair, the probability of this would be 0.5. This is our p-value. We toss the coin again and observe another head! The probability of this, and the p-value, is $0.5 \times 0.5=0.25$. Is this sufficient to reject the null hypothesis? Not quite, as the p-value is still very high. We do another toss which gives another head! Now, the p-value is 0.125 ($0.25 \times 0.5$). It's still not that low but now, you might start to doubt the coin. If we observe a couple of more heads, changing the p-value to 0.0625 ($0.125 \times 0.5$) and then 0.03125 ($0.0625 \times 0.5$), we can say, with much confidence that the coin is biased and reject the null hypothesis. This suggests that the more samples you have, the more confident you will be of the result of an experiment from the sample.
+
+Okay, how does all this fit with the train-test split? The main reason we do a train-test split is because we want to answer the question: is our model overfitting? This is just a hypothesis test with the null hypothesis being that the model is not overfitting and the alternate being that it is. As we saw with the coin example, we need a sufficient number of samples to be confident in the result of this test. The actual number of samples that should be in our test set for this is highly subjective, though, a test set with a couple of thousand samples should be sufficient, provided that the test samples are from the same distribution as the train set. If you are not confident that this is the test, it is always better to use a larger number of samples in the test set. A typical machine learning project has some tens of thousands of samples. Using the 80-20 split gives us a comfortable number of test samples (of a few thousand). This answers our first question: where does this ratio come from?
+
+Now that we know the rationale behind the 80-20 number, we can easily figure out in which cases this ratio works. It works for the cases when our sample size ranges in tens of thousands. However, when the sample size is in millions (as is with deep learning projects), one can get away with taking only 1-2% of total samples as a test set! On the other hand, if the sample size is very small, say a few thousand, we have to be very careful when choosing the split ratio. Using a high test percentage will give us more confidence over overfitting but will result in lower train data. The reverse problem arises when using a low test percentage.
+
+To summarize, the 80-20 split may not work in all cases. You must keep in mind the total sample size available for your project. Thinking about the number of samples in the train-test set instead of the percentage will help you better decide what ratio you should use.
+
+<details>
+  <summary className="mb-5 text-lg font-bold">Aside: Train-Test-Eval Set</summary>
+  <p>
+    You will often come across posts, videos, and textbooks that suggest that you should create
+    three sets of your dataset:
+  </p>
+  <ol>
+    <li>A train set to train the model</li>
+    <li>An eval set to evaluate your model and hyperparameter tuning</li>
+    <li>A test set to report the final performance of the model</li>
+  </ol>
+  <p>
+    Most often, this gives a better result than the two-set split. The same argument also works here
+    when deciding the ratio of these splits.
+  </p>
+</details>

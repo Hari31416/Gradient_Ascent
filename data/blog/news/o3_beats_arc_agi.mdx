@@ -1,0 +1,159 @@
+---
+title: 'o3 from OpenAI Beats ARC-AGI'
+date: '2024-12-22'
+tags: ['news', 'short_read']
+draft: false
+summary: 'A new system from OpenAI, o3 system, makes a breakthrough, scoring 75.7% on the ARC-AGI dataset.'
+images: ['/static/images/news/o3_beats_arc_agi/o-series-performance.jpg']
+layout: PostBanner
+---
+
+<details className="mb-5 text-lg font-bold">
+  <summary>Table of Contents</summary>
+  <TOCInline toc={props.toc} exclude="Introduction" />
+</details>
+
+OpenAI's new o3 system makes a breakthrough, scoring 75.7% on the ARC-AGI dataset! Giving higher compute to the o3 system makes it score 87.5%.
+
+<figure>
+  <img
+    src="/static/images/news/o3_beats_arc_agi/o-series-performance.jpg"
+    alt="Performace of o-series models on ARC-AGI dataset"
+  />
+  <figcaption>
+    o3 system scores 75.7% on the semi-private set of the ARC-AGI dataset. With higher compute, it
+    scores 87.5%. Image credit: [^1]
+  </figcaption>
+</figure>
+
+To understand just how wild it is, consider the scores of some other SotA LLMs:
+
+- Gemini 1.5: 4.5%
+- GPT4o: 5%
+- Claude 3.5 Sonnet: 14%
+
+Yes, it is wild!
+
+<figure>
+  <img
+    className="md:w-1/2"
+    src="/static/images/news/o3_beats_arc_agi/sota_on_arc.png"
+    alt="Current best-performing models on ARC dataset."
+  />
+  <figcaption>Current best performing models on ARC dataset. Image credit: [^1]</figcaption>
+</figure>
+
+## But What is the ARC Benchmark?
+
+ARC dataset is a collection of problems that are very easy for an average human to solve but have turned out to be nearly impossible to solve by traditional LLMs. As the official website puts it[^2]:
+
+> It's easy for humans, but hard for AI.
+
+Beating this benchmark is a necessary condition (though, not sufficient) before a system can be said to have achieved AGI.
+
+## A Puzzle From the ARC Dataset
+
+Here is a sample puzzle from the ARC dataset:
+
+<div className="flex flex-wrap">
+  <div className="w-full p-2 md:w-3/4 lg:w-1/2">
+    <img
+      src="/static/images/news/o3_beats_arc_agi/sample_puzzle_inputs.png"
+      alt="Performace of o-series models on ARC-AGI dataset"
+    />
+  </div>
+  <div className="w-full p-2 md:w-3/4 lg:w-1/2">
+    <img
+      src="/static/images/news/o3_beats_arc_agi/sample_puzzle_output.png"
+      alt="Performace of o-series models on ARC-AGI dataset"
+    />
+  </div>
+  <div className="-mt-10">
+    <small className="text-gray-400">
+      A sample puzzle from the ARC dataset. The left image shows the examples with inputs and
+      outputs, and the right image shows the problem input. Find this puzzle
+      [here](https://arcprize.org/play?task=007bbfb7).
+    </small>
+  </div>
+</div>
+
+Each _puzzle_ consists of multiple examples with input and output, followed by the problem input. Each input/output is just a 2D grid. There are some unique transformation rules that map the inputs to the output. The goal is to learn the rules _on the fly_ and apply them to the problem input to figure out what the output grid will be. These rules are fairly straightforward for humans to figure out but turn out to be very difficult for an ML model. Can you guess the rules for the above examples? If yes, congratulations, you are human (hopefully)!
+
+Since each puzzle in the ARC dataset has a different rule, a model can not rely on memorization or some template. A model has to reason through the inputs and learn the rules.
+
+<details>
+  <summary className="mb-5 text-lg font-bold">Answer to the Above Puzzle</summary>
+  <p>
+    The output grid results from repeating the input grid. Positions, where the input box was dark,
+    remain dark for the output grid. We put the input grid as is on the positions where the input
+    grid had colored boxes.
+  </p>
+</details>
+
+## Does That Mean that the o3 System Has Achieved AGI?
+
+The short answer is: No. ARC benchmark is not an acid test for AGI. Even though o3 scores 75.7% (which increases to 87.5% if we let it think for a longer time), it still fails on some ridiculously easy problems. The ARC AGI team is working on a second iteration of the benchmark, the ARC-AGI-2 benchmark. O3 may perform as low as 25% on the newer benchmark (even though the average human performance is still ~95%)^1. One thing we can say for sure is this: the success of the o3 system has forced many (me included) to change their views on if and when AGI is coming in the future.
+
+<figure>
+  <img
+    src="/static/images/news/o3_beats_arc_agi/arc-agi-task-c6e1b8da.png"
+    alt="A relatively easy problem from ARC-AGI dataset which o3 system fails to solve."
+  />
+  <figcaption>
+    A relatively easy problem from the ARC-AGI dataset which the o3 system fails to solve. Can you
+    solve the puzzle? Image credit: [^1]
+  </figcaption>
+</figure>
+
+## What About Other Benchmarks?
+
+Well, o3 has triumphed over nearly all of the benchmarks. o3 has saturated benchmarks in software engineering, competition code, maths, PhD level science, and more. However, most of these benchmarks are already saturated, hence, it is beating the ARC benchmark that makes o3 truly special.
+
+<figure>
+  <img
+    className="md:w-3/4"
+    src="/static/images/news/o3_beats_arc_agi/ai_benchmarks.jpg"
+    alt="Some AI benchmarks that are beaten"
+  />
+  <figcaption>
+    Benchmarks like SQuAD, HellaSwag, GLUE, and MMLU have been saturated very quickly when compared
+    to ARC-AGI. This is another reason why o3 beating it is such a big deal. Image credit: [^2]
+  </figcaption>
+</figure>
+
+Here are some other benchmarks where o3 is performing very well:
+
+<figure>
+  <img
+    className="md:w-3/4"
+    src="/static/images/news/o3_beats_arc_agi/coding_benchmarks.png"
+    alt="Coding Benchmark"
+  />
+  <figcaption>
+    o3 achieves ~72% on the SWE benchmark and an Elo score of 2727. Image credit: [^3]
+  </figcaption>
+</figure>
+
+<figure>
+  <img
+    className="md:w-3/4"
+    src="/static/images/news/o3_beats_arc_agi/science_benchmarks.png"
+    alt="Coding Benchmark"
+  />
+  <figcaption>
+    o3 achieves a whopping 97% on competition math and on PhD level science questions, it performs
+    ~88%. Image credit: [^3]
+  </figcaption>
+</figure>
+
+## Conclusion
+
+The o3 system has also performed well on other benchmarks, including software engineering, competition code, maths, and PhD level science. However, as the ARC benchmark is particularly challenging, the o3 system's success on this benchmark is a testament to its capabilities. While the o3 system has not achieved AGI, its performance on the ARC benchmark has forced many to reconsider their views on the future of AGI.
+
+[^1]: [ARC Prize: OpenAI o3 Breakthrough High Score on ARC-AGI-Pub](https://arcprize.org/blog/oai-o3-pub-breakthrough)
+
+[^2]: [ARC Prize: ARC Prize](https://arcprize.org/)
+
+[^3]:
+    [OpenAI on YouTube: OpenAI o3 and o3-mini—12 Days of OpenAI: Day 12
+    ](https://www.youtube.com/live/SKBG1sqdyIU?si=lWccKHt8bnttuYta)

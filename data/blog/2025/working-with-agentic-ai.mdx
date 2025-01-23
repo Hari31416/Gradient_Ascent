@@ -1,0 +1,192 @@
+---
+title: 'Working With Agentic AI'
+date: '2025-01-23'
+tags: ['llm', 'agents', 'how-to']
+draft: true
+summary: 'A guide to working with agentic AI using smolagents, including how to build custom tools and agents.'
+images: ['/static/images/2025/encoder_decoder_architecture/banner.png']
+layout: PostBanner
+---
+
+# Introduction
+
+Unless you are living in a cave, you must have heard about or used large language models (LLMs) like ChatGPT, Claude and Gemini.
+
+# Benefits of Agentic AI
+
+## Providing Extra Information
+
+LLMs have only the information on which they are trained. They can not fetch the latest information or access any external database or API. Using agents provides a way to provide this extra information that can be used to improve the AI system.
+
+## Best of Both World
+
+Using agents without an LLM (equivalent to traditional programming) is very structured but it can not handle all the edge cases and we can not write traditional scripts for each task. On the other hand, LLMs do not require explicit programming instruction and are very good at generating responses or actions based on nuanced, context-dependent understanding. Using them together provides a way to get the best of both worlds.
+
+## **Adaptability and Scalability**
+
+Even the SotA LLMs fail when working on complex problems that require multiple planning steps. The accuracy of the LLM decreases with the number of steps. Using agents provides a way for the LLM to break the problem into multiple steps and solve each step separately using the LLM and the agent.
+
+# Applications
+
+Applications of agentic AI are vast and can be used in many fields. Some of the applications are:
+
+## Analytics
+
+- **Automated Data Preparation:** Use AI agents to clean, transform, and prepare data for analysis.
+- **Exploratory Data Analysis:** Use AI agents to generate plots, summaries, and insights from the data.
+- **Model Selection and Optimization:** Provided with a dataset, an AI agent can automatically select the best model and optimize it.
+- **Data Conversation:** Enable conversational analytics where users can query data in natural language.
+
+## Software Development
+
+- **Code Writing:** LLMs can generate the code and test cases, an agent can then try to execute the code and provide feedback to the LLM. An example will be to convert a codebase from one language to another.
+- **Automated Testing:** The system can generate test cases based on the code base which can be run.
+- **Refactoring:** Refactoring the codebase to improve the code quality.
+
+## Customer Service
+
+- **Intelligent Virtual Assistants:** Agentic AI-powered chatbots or voice assistants can autonomously handle customer queries, troubleshoot issues, and escalate complex cases.
+- **Automated Feedback Collection and Analysis:** Instead of manual surveys, AI agents can collect feedback from customers and analyze it to identify trends and insights.
+
+## HR Assistant
+
+- **Recruitment Automation:** Most of the recruitment process can be automated using agentic AI.
+- **Onboarding New Employees:** AI agents can help in onboarding new employees by providing them with the necessary information and training.
+
+# Build Your Own Agent
+
+In this section of the article, we will use `smolagents` to create an agentic system to help with resume creation. When creating a resume, it is advisable to tailor the resume to the job description by adding relavant skills, projects and experiences. One of the most time-consuming tasks is to go through the job description, extract important points and filter out which projects to include in the resume. Instead of doing this manually, we can create an agent that can scrape a Linkedin job description, save the important points to a file and help you figure out which projects to include in the resume. In short, our agent will take the Linkedin url of the job description and the file that has all your projects and will create a file that has the important points from the job description and the projects that are relevant to the job description.
+
+Breaking the problem in a step-by-step manner, we need to do the following tasks:
+
+1. Scrape the job description from Linkedin.
+2. Extract important points like skills, experience, etc.
+3. Save the points to a file.
+4. Read the file that has all your projects.
+5. Filter out the projects that are relevant to the job description.
+6. Write the filtered projects to a file. For now, we will write the filtered projects to the same file that has the important points from the JD.
+
+<details>
+  <summary className="mb-5 text-lg font-bold">A Note About The Task</summary>
+  <p>
+    I have selected this task specifically because it is a good example of how agents can be used to
+    solve a non-trivial problem. This task is complex enough that we will need to use many
+    techniques, like using multi-agent system and building our own tools.
+  </p>
+</details>
+
+## A Brief Note About `smolagents`
+
+[smolagents](https://github.com/huggingface/smolagents) is a minimal library that has tools to create agents. The reason why we will be using this library instead of other more sophisticated libraries (like [crewAI](https://github.com/crewAIInc/crewAI) and [pydantic-ai](https://github.com/pydantic/pydantic-ai)) is because it is minimal and easy to use. The codebase is very simple and easy to understand so, one can always consult the source code itself to understand how the library works.
+
+`smolagents` provides two types of agents: `ToolCallingAgent` which is just an LLM that can call a tool provided to it and `CodeAgent` that can write and execute python code at each step. An LLM running python code locally is not a good idea. However, `smolagents` has implemented a local python executor that can run the code in a safe environment with limited access to imports and functions.
+
+The library also provides a number of useful tools that can be used to create agents. If the tool you need is not provided, you can always create your own tool which is as easy as creating a python function.
+
+### Installation
+
+`smolagents` can be installed using pip:
+
+```bash
+pip install smolagents
+```
+
+Once installed, you can start building your own agents. Here is an example[^1] agent that calculates 118th Fibonacci number. Note that you must pass your Hugging Face API token to the `HfApiModel` class.
+
+```python
+from smolagents import CodeAgent, HfApiModel
+
+model_id = "meta-llama/Llama-3.3-70B-Instruct"
+
+model = HfApiModel(model_id=model_id, token="<YOUR_HUGGINGFACEHUB_API_TOKEN>")
+agent = CodeAgent(tools=[], model=model, add_base_tools=True)
+
+agent.run(
+    "Could you give me the 118th number in the Fibonacci sequence?",
+)
+```
+
+## Agent Design
+
+One way to go about this is to create a single agent that does the six steps. However, it is better to create different agents for different tasks. This way, one agent is only resposible for a subset of the tasks and need not worry about the other tasks. This also makes the system more modular and scalable and less prone to errors. If we look at the tasks, we can divide them into two categories: scraping and summarizing the job description and filtering the projects. We will create two agents, one for each task. Let us call the first agent `JobDescriptionAgent` and the second agent `ProjectFilterAgent`. Since we have more than one agent, we need a way to coordinate between the agents. One way to do so is by creating a _manager_ agent, which will be responsible for using the other agents and coordinating between them. This is an example of a multi-agent system[^2].
+
+<figure>
+  <img src="/static/images/2025/agentic_ai/agent_chart.svg" alt="Agent Design" />
+  <figcaption>
+    We will create a manger agent that will use the JobDescriptionAgent and the ProjectFilterAgent.
+  </figcaption>
+</figure>
+
+## Tools
+
+Our agent is going to need some tools to help with the tasks. Here are a list of tools that are required:
+
+1. **Linkedin Scraper:** To scrape the job description from Linkedin. `smolagents` provides a tool to scrape a website, however, it is not very sophisticated and returns a lot of useless information. We will create our own tool to scrape the job description.
+2. **File Reader:** To read the file that has all your projects. `smolagents` does not provide a tool to read a file, though, we can use the python interpretor with `open` function to read the file. While working with agentic AI, it is always better to rely less on LLM generated code and more on the tools created by you. In this spirit, we will create our own tool to read the file.
+3. **File Writer:** To write the important points from the job description and the filtered projects to a file. Again, we will create our own tool to write the file.
+
+Let us start by creating the tools.
+
+### Creating the Tools
+
+`smolagents` provides two way to create a tool: using a function or using a class. We will create the Linkedin scraper tool using a function. Here is the code to create the tool:
+
+```python
+from smolagents import tool
+@tool
+def scrape_linkedin_job_page(job_url: str) -> str:
+    """
+    Scrapes a LinkedIn job page and returns the job title and job description in markdown format.
+
+    Args:
+        job_url: The LinkedIn job page URL.
+
+    Returns:
+        str: The job title and job description in markdown format.
+    """
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    }
+
+    res = requests.get(job_url, headers=headers)
+    res.raise_for_status()
+
+    soup = bs4.BeautifulSoup(res.text, "html.parser")
+
+    title = soup.select_one("title").text.split("|")[0].strip()
+
+    jd = soup.select_one("div.show-more-less-html__markup")
+    jd = md(jd.prettify())
+
+    final = f"# {title}\n\n## Job Description\n{jd}"
+
+    return final
+```
+
+# Challenges
+
+## Data Privacy and Security Concerns
+
+## Explainability
+
+## Maintenance and oversight
+
+# Sources
+
+https://sendbird.com/blog/what-is-agentic-ai
+
+https://www.ibm.com/think/insights/agentic-ai
+
+https://research.aimultiple.com/agentic-ai/
+
+https://kanerika.com/blogs/agentic-ai-vs-generative-ai/
+
+https://www.deeplearning.ai/the-batch/issue-253/
+
+https://blog.langchain.dev/what-is-an-agent/
+
+https://platform.openai.com/docs/guides/function-calling
+
+[^1]: [Building your agent](https://huggingface.co/docs/smolagents/en/guided_tour#building-your-agent)
+
+[^2]: [Orchestrate a multi-agent system 🤖🤝🤖](https://huggingface.co/docs/smolagents/en/examples/multiagents)

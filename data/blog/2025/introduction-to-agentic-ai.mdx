@@ -15,14 +15,14 @@ layout: PostBanner
 
 # Introduction
 
-Unless you are living in a cave, you must have heard about or used large language models (LLMs) like ChatGPT, Claude and Gemini. LLMs are good in many scenarios like:
+Unless you are living in a cave, you must have heard about or used large language models (LLMs) like ChatGPT, Claude, and Gemini. LLMs are good in many scenarios like:
 
 - natural language understanding and generating
 - reasoning over a large amount of information
 - generating code and debugging
 - knowledge extraction and summarization
 
-However, at their core, they are just a system that takes text (and sometimes images, video and audio) as input and generates text (and other formats) as output. They lack the ability to interact with the environment, fetch information from the web, or access external databases. Morever, they are limited to the information on which they are trained and can not fetch the latest information. Techniques, like retrival-augmented generation can solve some of these problems, but, unless LLMs are not able to take actions based on the information they have, they will always be limited.
+However, at their core, they are just a system that takes text (and sometimes images, video, and audio) as input and generates text (and other formats) as output. They lack the ability to interact with the environment, fetch information from the web, or access external databases. Moreover, they are limited to the information on which they are trained and can not fetch the latest information. Techniques, like retrieval-augmented generation can solve some of these problems, but, unless LLMs are not able to take actions based on the information they have, they will always be limited.
 
 <figure>
   <img src="/static/images/2025/agentic_ai/llm_io.svg" alt="Input Output of LLMs" />
@@ -32,15 +32,15 @@ However, at their core, they are just a system that takes text (and sometimes im
   </figcaption>
 </figure>
 
-Agents are a way to overcome these limitations. In this article, we will discuss what agents are, how they work, the benefits of using agents and some applications of agentic AI.
+Agents are a way to overcome these limitations. In this article, we will discuss what agents are, how they work, the benefits of using agents and some applications of agentic AI. This article is the first part of a series of articles on agentic AI. In the next article, we will discuss how to create your own agent using `smolagents`. Here is the link to [next article](https://blogs.hari31416.in/blog/2025/create-your-own-agent).
 
 ## What Exactly are Agents?
 
-There is not a universal definition of an agent. In fact, it is even debatable whether there is a hard line that seperates a system from not being an agent to being an agent. To quote Andrew NG[^5]:
+There is not a universal definition of an agent. In fact, it is even debatable whether there is a hard line that seperates a system from not being an agent to being an agent. To quote Andrew NG[^1]:
 
 > Rather than having to choose whether or not something is an agent in a binary way, I thought, it would be more useful to think of systems as being agent-like to different degrees. Unlike the noun “agent,” the adjective “agentic” allows us to contemplate such systems and include all of them in this growing movement.
 
-In this spirit, instead of asking whether a system can be called an agent or not, we can ask how agentic a system is. There are different level of "ageticness". A system is more "agentic" if, by use of an LLM, it is able to complete a task more autonomously. For example, a system that lets to book a filght between two cities is more agentic than a system that just gives you the list of available flights. Neverthless, we must have some definition of an agent to work with. I like the definition given by Harrison Chase, cofounder of Langchain[^6]:
+In this spirit, instead of asking whether a system can be called an agent or not, we can ask how agentic a system is. There are different level of "ageticness". A system is more "agentic" if, by use of an LLM, it is able to complete a task more autonomously. For example, a system that lets to book a filght between two cities is more agentic than a system that just gives you the list of available flights. Neverthless, we must have some definition of an agent to work with. I like the definition given by Harrison Chase, cofounder of Langchain[^2]:
 
 > An AI agent is a system that uses an LLM to decide the control flow of an application.
 
@@ -65,7 +65,7 @@ Based on how much control an LLM has over the workflow of you application, we ca
 - **Level 4: Multi-Agent:** This is the final level of agenticness. In this level, there are multiple agents and one agentic workflow can call a different agent to complete a task. An example will be a system that can book a flight for you. The system can call a weather agent to check the weather of the destination, a flight agent to book the flight, a hotel agent to book the hotel etc.
 
 <table>
-<caption>Various levels of agenticness (Table from[^8])</caption>
+<caption>Various levels of agenticness (Table from[^3])</caption>
 
 | **Agency Level** | **Description**                                         | **How that’s called** | **Example Pattern**                                |
 | ---------------- | ------------------------------------------------------- | --------------------- | -------------------------------------------------- |
@@ -104,7 +104,7 @@ This section outlines a workflow of a typical agentic AI system. An agent consis
 - **LLM:** The LLM is the main component of the agent. It is used to generate code, call tools, and take actions based on the information it has.
 - **Tools:** Tools are functions that can be called by the LLM. They can be used to perform tasks like executing LLM generated code, reading and writing files, and calling APIs.
 
-Apart from these, the system has access to a state that can be read/write by the LLM. The state can be used to store information that can be used by the LLM to make decisions like what actions to take next and when to stop the task. To solve a task, the agent uses ReAct framework [^7]. The ReAct framework is based on two steps: Reason and Action. At each step, the system reasons over the current state and takes an action based on the reasoning.
+Apart from these, the system has access to a state that can be read/write by the LLM. The state can be used to store information that can be used by the LLM to make decisions like what actions to take next and when to stop the task. To solve a task, the agent uses ReAct framework [^4]. The ReAct framework is based on two steps: Reason and Action. At each step, the system reasons over the current state and takes an action based on the reasoning.
 
 The following flowchart shows a typical agentic workflow:
 
@@ -117,11 +117,14 @@ The agent starts when a human gives it a prompt. The LLM utilizes its reasoning 
 
 <figure>
   <video controls className="md:w-3/4">
-    <source src="/static/images/2025/agentic_ai/hf_calculator_agent.mp4" type="video/mp4" />
+    <source
+      src="https://raw.githubusercontent.com/Hari31416/gradient_ascent/main/public/static/images/2025/agentic_ai/hf_calculator_agent.mp4"
+      type="video/mp4"
+    />
   </video>
   <figcaption>
     An example of an agent solving a mathematical problem using tools. Animation Source:
-    HuggingFace[^8]
+    HuggingFace[^3]
   </figcaption>
 </figure>
 
@@ -141,25 +144,25 @@ Note that these tasks are not trivial to code. Fortunately, you do not need to s
 
 Applications of agentic AI are vast and can be used in many fields. We have listed some of the applications below:
 
-### Software Development
+**Software Development**
 
 - **Code Writing:** LLMs can generate the code and test cases, an agent can then try to execute the code and provide feedback to the LLM. An example will be to convert a codebase from one language to another.
 - **Automated Testing:** The system can generate test cases based on the code base which can be run.
 - **Refactoring:** Refactoring the codebase to improve the code quality.
 
-### Data Science
+**Data Science**
 
 - **Automated Data Preparation:** Use AI agents to clean, transform, and prepare data for analysis.
 - **Exploratory Data Analysis:** Use AI agents to generate plots, summaries, and insights from the data.
 - **Model Selection and Optimization:** Provided with a dataset, an AI agent can automatically select the best model and optimize it.
 - **Data Conversation:** Enable conversational analytics where users can query data in natural language.
 
-### Customer Service
+**Customer Service**
 
 - **Intelligent Virtual Assistants:** Agentic AI-powered chatbots or voice assistants can autonomously handle customer queries, troubleshoot issues, and escalate complex cases.
 - **Automated Feedback Collection and Analysis:** Instead of manual surveys, AI agents can collect feedback from customers and analyze it to identify trends and insights.
 
-### HR Assistant
+**HR Assistant**
 
 - **Recruitment Automation:** Most of the recruitment process can be automated using agentic AI.
 - **Onboarding New Employees:** AI agents can help in onboarding new employees by providing them with the necessary information and training.
@@ -196,20 +199,12 @@ In this article, we discussed what agents are, how they work, the benefits of us
 - [What is an AI agent? (Langchain)](https://blog.langchain.dev/what-is-an-agent/)
 - [Function calling (OpenAI)](https://platform.openai.com/docs/guides/function-calling)
 
-[^1]: [Building your agent (HuggingFace)](https://huggingface.co/docs/smolagents/en/guided_tour#building-your-agent)
+[^1]: [The Batch Weekly Issues 253 (Deeplearning.AI)](https://www.deeplearning.ai/the-batch/issue-253/)
 
-[^2]: [Orchestrate a multi-agent system 🤖🤝🤖](https://huggingface.co/docs/smolagents/en/examples/multiagents)
+[^2]: [What is an AI agent? (Langchain)](https://blog.langchain.dev/what-is-an-agent/)
 
-[^3]: [Google Style Python Docstrings](https://google.github.io/styleguide/pyguide.html)
-
-[^4]: [Executable Code Actions Elicit Better LLM Agents](https://arxiv.org/abs/2402.01030)
-
-[^5]: [The Batch Weekly Issues 253 (Deeplearning.AI)](https://www.deeplearning.ai/the-batch/issue-253/)
-
-[^6]: [What is an AI agent? (Langchain)](https://blog.langchain.dev/what-is-an-agent/)
-
-[^7]: [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
-
-[^8]:
+[^3]:
     [Introduction to Agents
     (HuggingFace)](https://huggingface.co/docs/smolagents/en/conceptual_guides/intro_agents)
+
+[^4]: [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)

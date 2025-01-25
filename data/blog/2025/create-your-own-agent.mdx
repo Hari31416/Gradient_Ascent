@@ -1,10 +1,10 @@
 ---
-title: 'Create Your Own Agent using smolagents'
-date: '2025-01-23'
+title: 'Create Your Own Agent Using smolagents'
+date: '2025-01-25'
 tags: ['llm', 'agents', 'how-to']
 draft: true
-summary: 'A guide to working with agentic AI using smolagents, including how to build custom tools and agents.'
-images: ['/static/images/2025/agentic_ai/banner.svg']
+summary: 'A step-by-step guide to creating an agent using smolagents.'
+images: ['/static/images/2025/agentic_ai/banner_2.png']
 layout: PostBanner
 ---
 
@@ -15,33 +15,29 @@ layout: PostBanner
 
 # Introduction
 
-In this article, we will use `smolagents` to create an agentic system to help with resume creation. When creating a resume, it is advisable to tailor the resume to the job description by adding relavant skills, projects and experiences. One of the most time-consuming tasks is to go through the job description, extract important points and filter out which projects to include in the resume. Instead of doing this manually, we can create an agent that can scrape a Linkedin job description, save the important points to a file and help you figure out which projects to include in the resume. In short, our agent will take the Linkedin url of the job description and the file that has all your projects and will create a file that has the important points from the job description and the projects that are relevant to the job description.
-
-Breaking the problem in a step-by-step manner, we need to do the following tasks:
-
-1. Scrape the job description from Linkedin.
-2. Extract important points like skills, experience, etc.
-3. Save the points to a file.
-4. Read the file that has all your projects.
-5. Filter out the projects that are relevant to the job description.
-6. Write the filtered projects to a file. For now, we will write the filtered projects to the same file that has the important points from the JD.
-
 <details>
-  <summary className="mb-5 text-lg font-bold">A Note About The Task</summary>
+  <summary className="mb-5 text-lg font-bold">Important Note</summary>
   <p>
-    I have selected this task specifically because it is a good example of how agents can be used to
-    solve a non-trivial problem. This task is complex enough that we will need to use many
-    techniques, like using multi-agent system and building our own tools.
+    This is the second article of a series of articles on Agentic AI. In the first article, we
+    discussed what agents are, how they work, the benefits of using agents, and some applications of
+    agentic AI. We also discussed the workflow of a typical agent and how to create a simple agent.
+    Most of the concepts introduced there will be used here. If you have not read the first article,
+    I recommend you to read it before continuing with this article. You can find the first article
+    [here](https://blogs.hari31416.in/blog/2025/introduction-to-agentic-ai).
   </p>
 </details>
 
-## A Brief Note About `smolagents`
+Large language models are very good at natural language processing, reasoning, and generating code. However, they are just a system that takes text (and sometimes images, video, and audio) as input and generates text (and other formats) as output. They lack the ability to interact with the environment, fetch information from the web, or access external databases. Agents are a way to provide LLMs with the ability to interact with the environment. An agent is a system that uses an LLM to decide the control flow of an application. This means that an agent can use an LLM to generate code, call functions, and make decisions based on the information it has. This is in contrast to a system that uses an LLM to generate text or code but does not use the LLM to decide the control flow of the application.
 
-[smolagents](https://github.com/huggingface/smolagents) is a minimal library that has tools to create agents. The reason why we will be using this library instead of other more sophisticated libraries (like [crewAI](https://github.com/crewAIInc/crewAI) and [pydantic-ai](https://github.com/pydantic/pydantic-ai)) is because it is minimal and easy to use. The codebase is very simple and easy to understand so, one can always consult the source code itself to understand how the library works.
+The purpose of this article is to walk you through a step-by-step guide to creating an agent using `smolagents`. The complete code for the agent is in this [notebook](https://colab.research.google.com/github/Hari31416/blog_scripts/blob/main/agentic_ai/resume_builder.ipynb).
 
-`smolagents` provides two types of agents: `ToolCallingAgent` which is just an LLM that can call a tool provided to it and `CodeAgent` that can write and execute python code at each step. An LLM running python code locally is not a good idea. However, `smolagents` has implemented a local python executor that can run the code in a safe environment with limited access to imports and functions.
+## A Brief Note On `smolagents`
 
-The library also provides a number of useful tools that can be used to create agents. If the tool you need is not provided, you can always create your own tool which is as easy as creating a python function.
+[smolagents](https://github.com/huggingface/smolagents) is a minimal library that has tools to create agents. The reason why we will be using this library instead of other more sophisticated libraries (like [LangGraph](https://github.com/langchain-ai/langgraph), [crewAI](https://github.com/crewAIInc/crewAI) and [pydantic-ai](https://github.com/pydantic/pydantic-ai)) is because it is minimal and easy to use. The codebase is very simple and easy to understand so, one can always consult the source code itself to understand how the library works.
+
+`smolagents` provides two types of agents: `ToolCallingAgent` which is just an LLM that can call a tool provided to it and `CodeAgent` which can write and execute Python code at each step. An LLM running Python code locally is not a good idea. However, `smolagents` has implemented a local Python executor that can run the code in a safe environment with limited access to imports and functions.
+
+The library also provides a number of useful tools that can be used to create agents. If the tool you need is not provided, you can always create your own tool which is as easy as creating a Python function.
 
 ### Installation
 
@@ -66,31 +62,61 @@ agent.run(
 )
 ```
 
+Refer to the [official documentation](https://huggingface.co/docs/smolagents/en/index) for more information.
+
+## Problem Statement
+
+When creating a resume, it is advisable to tailor the resume to the job description by adding relevant skills, projects, and experiences. One of the most time-consuming tasks is to go through the job description, extract important points, and filter out which projects to include in the resume. Instead of doing this manually, we can create an agent that can scrape a LinkedIn job description, save the important points to a file, and help you figure out which projects to include in the resume. In short, our agent will take the LinkedIn URL of the job description and the file that has all your projects and will create a file that has the important points from the job description and the projects that are relevant to the job description.
+
+Breaking the problem in a step-by-step manner, we need to do the following tasks:
+
+1. Scrape the job description from Linkedin.
+2. Extract important points like skills, experience, etc.
+3. Save the points to a file.
+4. Read the file that has all your projects.
+5. Filter out the projects that are relevant to the job description.
+6. Write the filtered projects into a file. For now, we will write the filtered projects to the same file that has the important points from the JD.
+
+<details>
+  <summary className="mb-5 text-lg font-bold">A Note About The Task</summary>
+  <p>
+    I have selected this task specifically because it is a good example of how agents can be used to
+    solve a non-trivial problem. This task is complex enough that we can use many techniques, like
+    building our own tools and using a multi-agent system.
+  </p>
+</details>
+
 ## Agent Design
 
-One way to go about this is to create a single agent that does the six steps. However, it is better to create different agents for different tasks. This way, one agent is only resposible for a subset of the tasks and need not worry about the other tasks. This also makes the system more modular and scalable and less prone to errors. If we look at the tasks, we can divide them into two categories: scraping and summarizing the job description and filtering the projects. We will create two agents, one for each task. Let us call the first agent `job_description_agent` and the second agent `project_filter_agent`. Since we have more than one agent, we need a way to coordinate between the agents. One way to do so is by creating a _manager_ agent, which will be responsible for using the other agents and coordinating between them. This is an example of a multi-agent system[^2].
+One way to go about this is to create a single agent that does the six steps. Provided that our task is not that challenging, this is indeed the best way to go about it. (We should always avoid complexity if we can.[^5]) However, we will be creating more than one agent mostly because:
+
+1. This way we can learn how to create manager-managed agents.
+2. Having multiple agents makes it easy to extend our use case. If we want to add more functionality, like updating the project descriptions to better suit the JD, we can easily do so with minimal change.
+3. This way, one agent is only responsible for a subset of the tasks and need not worry about the other tasks. This also makes the system more modular and scalable and less prone to errors.
+
+If we look at the tasks, we can divide them into two categories: scraping and summarizing the job description and filtering the projects. We will create two agents, one for each task. Let us call the first agent `job_description_agent` and the second agent `project_filter_agent`. Since we have more than one agent, we need a way to coordinate between the agents. One way to do so is by creating a _manager_ agent, which will be responsible for using the other agents and coordinating between them. This is an example of a multi-agent system[^2]. If you have read the previous article, you will remember that this is the highest form of agency.
 
 <figure>
   <img src="/static/images/2025/agentic_ai/agent_chart.svg" alt="Agent Design" />
   <figcaption>
-    We will create a manger agent that will use the job_description_agent and the
-    project_filter_agent.
+    We will create a manager agent that will use the job_description_agent and the
+    project_filter_agent for the tasks.
   </figcaption>
 </figure>
 
 ## Tools
 
-Our agent is going to need some tools to help with the tasks. Here are a list of tools that are required:
+Our agent is going to need some tools to help with the tasks. Here is a list of tools that are required:
 
-1. **Linkedin Scraper:** To scrape the job description from Linkedin. `smolagents` provides a tool to scrape a website, however, it is not very sophisticated and returns a lot of useless information. We will create our own tool to scrape the job description.
-2. **File Reader:** To read the file that has all your projects. `smolagents` does not provide a tool to read a file, though, we can use the python interpretor with `open` function to read the file. While working with agentic AI, it is always better to rely less on LLM generated code and more on the tools created by you. In this spirit, we will create our own tool to read the file.
+1. **Linkedin Scraper:** To scrape the job description from Linkedin. `smolagents` provides a tool to scrape a website, however, it is not very sophisticated and returns a lot of useless information. We will create our own tool to scrape the job description so that we return only the important part of the webpage.
+2. **File Reader:** To read the file that has all your projects. `smolagents` does not provide a tool to read a file, though, we can use the Python interpreter with the `open` function to read the file. While working with agentic AI, it is always better to rely less on LLM-generated code and more on the tools created by you. In this spirit, we will create our own tool to read the file.
 3. **File Writer:** To write the important points from the job description and the filtered projects to a file. Again, we will create our own tool to write the file.
 
 Let us start by creating the tools.
 
 ### Creating the Tools
 
-`smolagents` provides two way to create a tool: using a function or using a class. We will create the Linkedin scraper tool using a function. Here is the code to create the tool:
+`smolagents` provides two ways to create a tool: using a function or using a class. We will go through both the ways of creating a tool. We will create the LinkedIn scraper tool using a function. Here is the code to create the tool:
 
 ```python
 from smolagents import tool
@@ -99,7 +125,7 @@ from smolagents import tool
 @tool
 def scrape_linkedin_job_page(job_url: str) -> str:
     """
-    Scrapes a LinkedIn job page and returns the job title and job description in markdown format.
+    Scrapes a LinkedIn job page and returns a text in markdown format containing the job title and job description.
 
     Args:
         job_url: The LinkedIn job page URL.
@@ -126,9 +152,9 @@ def scrape_linkedin_job_page(job_url: str) -> str:
     return final
 ```
 
-The `tool` decorator from `smolagents` is resposible for converting a function to a `Tool` object that can be used by the agent. Take a special note on the type hint and the docstring. Both of these must be provided because `smolagents` uses these to create a description of the tool. The docstring must use the Google style docstring format.[^3]
+The `tool` decorator from `smolagents` is responsible for converting a function to a `Tool` object that can be used by the agent. Take a special note on the type hint and the docstring. Both of these must be provided because `smolagents` uses these to create a description of the tool. While calling the LLM, this description is passed along with the prompt so that the LLM can have information regarding which tools are available to it. You need to make sure that the description is verbose and covers everything that the function is able to do. The docstring must use the Google-style docstring format.[^3]
 
-The function `scrape_linkedin_job_page` takes a job url as input and returns the job title and job description in markdown format. We are using `requests` and `beautifulsoup4` to scrape the job description. The job title is extracted from the title tag and the job description is extracted from the `div` tag with the class `show-more-less-html__markup`. The job title and job description are then combined and returned in markdown format.
+We are using `requests` and `beautifulsoup4` to scrape the job description. The job title is extracted from the title tag and the job description is extracted from the `div` tag with the class `show-more-less-html__markup`. The job title and job description are then combined and returned as a markdown string.
 
 Next, we will use the tool for reading and writing files. Here, the tools are created using a class.
 
@@ -160,7 +186,7 @@ class FileReadTool(Tool):
             return f.read()
 ```
 
-We have created a class that inherits from `Tool` and has a `forward` method that reads the file and returns the content. `forward` method is the method that is called when the tool is used by the agent. The class has a `name`, `description`, `inputs`, and `output_type` attributes that are used to create a description of the tool. The `inputs` attribute is a dictionary where the key is the name of the input and the value is a dictionary with the type and description of the input. The `output_type` attribute is the type of the output of the tool. Since the information about the tool is provided in the class itself, we do not need to provide a docstring (or type hint).
+We have created a class that inherits from `Tool` and has a `forward` method that reads the file and returns the content. The `forward` method is called when the tool is used by the agent. The class has `name`, `description`, `inputs`, and `output_type` attributes that are used to create a description of the tool. The `inputs` attribute is a dictionary where the key is the name of the input and the value is a dictionary with the type and description of the input. The `output_type` attribute is the type of the output of the tool. Since the information about the tool is provided in the class itself, we do not need to provide a docstring (or type hint).
 
 Let us create the tool for writing the file.
 
@@ -216,21 +242,21 @@ class FileWriteTool(Tool):
 
 The `FileWriteTool` class is similar to the `FileReadTool` class. The `forward` method writes the data to the file and returns the path to the file. The `inputs` attribute has an additional key `overwrite` which is a boolean that tells the tool whether to overwrite the file if it already exists. Whenever your tool has some optional inputs, you must set the `nullable` key to `true` for the corresponding input. This lets the agent know that the input is optional.
 
-While creating tools, you should use error handling to catch any errors that might occur. If a error is captured, you should raise an exception with a meaningful message. This will help the agent to understand what went wrong and take appropriate action.
+While creating tools, you should use error handling to catch any errors that might occur. If an error is captured, you should raise an exception with a meaningful message. This will help the agent to understand what went wrong and take appropriate action.
 
 ### Creating the Agents
 
-Now that tools are created, we need to create the agents. Before creating an agent, we need to decide two things: the tools that the agent will use and the LLM. For tools, we should not give our agent any more tool than it needs. This avoids the agent from using the wrong tool. So, here are the tools that the different agents will use any why:
+Now that tools are created, we need to create the agents. Before creating an agent, we need to decide two things: the tools that the agent will use and the LLM. For tools, we should not give our agent any more tools than it needs. This prevents the agent from using the wrong tool. So, here are the tools that the different agents will use and why:
 
-| Agent Name              | Tools Used                 | Reason                                                                                                   |
-| ----------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `job_description_agent` | `scrape_linkedin_job_page` | This agent will only scrape the job description from Linkedin.                                           |
-| `project_filter_agent`  | `file_read_tool`           | This agent will read the file that has all your projects.                                                |
-| `manager_agent`         | `file_write_tool`          | This agent will write the important points from the job description and the filtered projects to a file. |
+| Agent Name              | Tool(s) Used                         | Reason                                                                                                   |
+| ----------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `job_description_agent` | `scrape_linkedin_job_page`           | This agent will only scrape the job description from Linkedin.                                           |
+| `project_filter_agent`  | `file_read_tool`                     | This agent will read the file that has all your projects.                                                |
+| `manager_agent`         | `file_write_tool`, `python_executor` | This agent will write the important points from the job description and the filtered projects to a file. |
 
 For the `job_description_agent` and `project_filter_agent`, we will use the `ToolCallingAgent` class. For the `manager_agent`, we will use the `CodeAgent` class. This will give our `manager_agent` access to executing Python code which makes it a better agent.[^4]
 
-Now, as for the LLM, you can choose any sufficiently adavanced model. Our task in not very complex and a free and open source model like ` Qwen/Qwen2.5-Coder-32B-Instruct` should be sufficient. This is what we will be using. The model can be loaded using the `HfApiModel` class from `smolagents`.
+Now, as for the LLM, you can choose any sufficiently advanced model. Our task is not very complex and a free and open source model like ` Qwen/Qwen2.5-Coder-32B-Instruct` should be sufficient. This is what we will be using. The model can be loaded using the `HfApiModel` class from `smolagents`.
 
 ```python
 from smolagents import HfApiModel
@@ -245,9 +271,9 @@ model_id = "Qwen/Qwen2.5-Coder-32B-Instruct"
 model = HfApiModel(model_id=model_id, token=HUGGINGFACE_API_KEY)
 ```
 
-You need not use the same model for each agent. You can use models that are smaller and cheaper for agents that are to perform simple tasks and use complex models only for those agents that require it. In our case, both the managed agents are performing simple enough task that `Qwen/Qwen2.5-Coder-32B-Instruct` should be sufficient. You can, if you want, use an advanced model such as `deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`for the`manager_agent`.
+You need not use the same model for each agent. You can use models that are smaller and cheaper for agents that are to perform simple tasks and use complex models only for those agents that require it. In our case, both the managed agents are performing simple enough tasks that `Qwen/Qwen2.5-Coder-32B-Instruct` should be sufficient. You can, if you want, use an advanced model such as `deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`for the`manager_agent`.
 
-Now that al these details are sorted out, let us create the agents.
+Now that all these details are sorted out, let us create the agents. You can create agents using the `ToolCallingAgent` or `CodeAgent` class. Both these classes take the `tools` parameter which is a list of tools that the agent will use. Here is the code to create the agents:
 
 ```python
 from smolagents import ToolCallingAgent, CodeAgent, ManagedAgent
@@ -261,7 +287,7 @@ job_description_agent = ToolCallingAgent(
 job_description_agent = ManagedAgent(
     job_description_agent,
     name="job_description_agent",
-    description="Have a knack of finding the relavant information from a job description. Can scrape the job description from a LinkedIn job posting and summarize its contents.",
+    description="Have a knack for finding the relevant information from a job description. Can scrape the job description from a LinkedIn job posting and summarize its contents.",
 )
 
 project_filter_agent = ToolCallingAgent(
@@ -284,9 +310,9 @@ manager_agent = CodeAgent(
 )
 ```
 
-We have first created the `job_description_agent` and `project_filter_agent` using the `ToolCallingAgent` class. We have then wrapped the agents in the `ManagedAgent` class. The `ManagedAgent` class is used to create a managed agent that can be used by the `manager_agent` that is created in the last and takes the `job_description_agent` and `project_filter_agent` as managed agents. Also note the `manager_agent` is created using the `CodeAgent` class instead of the `ToolCallingAgent` class to provide it with the ability to execute Python code. Since each agent takes the `model` parameter, you can use different models for different agents.
+We first created the `job_description_agent` and `project_filter_agent` using the `ToolCallingAgent` class. We have then wrapped the agents in the `ManagedAgent` class. The `ManagedAgent` class is used to create a managed agent that can be used by the `manager_agent` that is created in the last and takes the `job_description_agent` and `project_filter_agent` as managed agents. Also, note the `manager_agent` is created using the `CodeAgent` class instead of the `ToolCallingAgent` class to provide it with the ability to execute Python code. Since each agent takes the `model` parameter, you can use different models for different agents.
 
-I have written a short description for each managed agent. Feel free update the description to better suit your needs.
+Even though the `job_description_agent` and `project_filter_agent` are agents, since they are managed by the `manager_agent`, they work equivalent to tools. The `manager_agent` can call the `job_description_agent` and `project_filter_agent` with a request, the same as it would call a tool. For your `manager_agent` to understand what the managed agents can do, you need to provide a description of the managed agents. I have written a short description for each managed agent. Feel free to update the description to better suit your needs.
 
 <figure class="h-1/2">
   <img src="/static/images/2025/agentic_ai/final_agent_chart.svg" alt="Final Agent Design" />
@@ -298,7 +324,7 @@ I have written a short description for each managed agent. Feel free update the 
 
 ## Running the Agents
 
-Now that we have created the agents, we can run them. The `manager_agent` will take the Linkedin job url and the file that has all your projects as input and will write the important points from the job description and the filtered projects to a file. Here is the code to run the agents:
+This is it! Now, we use to call the `manager_agent` with a prompt. The prompt must mention the task that you want the `manager_agent` to perform in a clear and detailed manner. You must also pass the `job_url` and the `all_projects_path` to the prompt. The `manager_agent` will decide which agent/tool to call and what information to pass to them. Here is my prompt and the code to run the agent:
 
 ```python
 from textwrap import dedent
@@ -321,32 +347,26 @@ manager_agent.run(
 
 ```
 
-You need to pass your own `job_url` and `all_projects_path` to the `start_prompt` string. The `manager_agent` will then run the agents and write the important points from the job description and the filtered projects to a file. Again, feel free to update the `start_prompt` string.
+If everything works fine, you should see logs of the `manager_agent` calling the `job_description_agent` first, to scrape the job description, and then the `project_filter_agent` to filter the projects. The `manager_agent` will then write the points from the job description and the filtered projects to a file.
+
+This is a very simple task. Now that you have an understanding of the workflow of creating an agent, you can create more complex agents that can perform more complex tasks. A simple example would be to make your agent not only filter out which projects to include in the resume but also update the project descriptions to better suit the job description. You can go one step further and create an agent that can update your resume with the filtered projects and compile them into a PDF file. The possibilities are endless.
+
+# Conclusion
+
+In this article, we learned how to create an agent using `smolagents`. We created a manager agent that used two managed agents to scrape a job description from LinkedIn and filter out the projects that are relevant to the job description. We also learned how to create tools using functions and classes and created multiple tools using both methods. The final agent design was a multi-agent system that used a manager agent to coordinate between the managed agents. Find the complete code in this [notebook](https://colab.research.google.com/github/Hari31416/blog_scripts/blob/main/agentic_ai/resume_builder.ipynb).
 
 # Sources
 
-- [Building effective agents (ANthorpic)](https://www.anthropic.com/research/building-effective-agents)
 - [smolagents documentation (HuggingFace)](https://huggingface.co/docs/smolagents/en/index)
-- [Agentic AI: 4 reasons why it’s the next big thing in AI research (IBM)](https://www.ibm.com/think/insights/agentic-ai)
-- [What is agentic AI? A beginner's guide (sendbird)](https://sendbird.com/blog/what-is-agentic-ai)
-- [The Batch Weekly Issues 253 (Deeplearning.AI)](https://www.deeplearning.ai/the-batch/issue-253/)
-- [What is an AI agent? (Langchain)](https://blog.langchain.dev/what-is-an-agent/)
-- [Function calling (OpenAI)](https://platform.openai.com/docs/guides/function-calling)
 
 [^1]: [Building your agent (HuggingFace)](https://huggingface.co/docs/smolagents/en/guided_tour#building-your-agent)
 
-[^2]: [Orchestrate a multi-agent system 🤖🤝🤖](https://huggingface.co/docs/smolagents/en/examples/multiagents)
+[^2]: [Orchestrate a multi-agent system 🤖🤝🤖 (HuggingFace)](https://huggingface.co/docs/smolagents/en/examples/multiagents)
 
-[^3]: [Google Style Python Docstrings](https://google.github.io/styleguide/pyguide.html)
+[^3]: [Google Style Python Docstrings (Google)](https://google.github.io/styleguide/pyguide.html)
 
-[^4]: [Executable Code Actions Elicit Better LLM Agents](https://arxiv.org/abs/2402.01030)
+[^4]: [Executable Code Actions Elicit Better LLM Agents (arXiv)](https://arxiv.org/abs/2402.01030)
 
-[^5]: [The Batch Weekly Issues 253 (Deeplearning.AI)](https://www.deeplearning.ai/the-batch/issue-253/)
-
-[^6]: [What is an AI agent? (Langchain)](https://blog.langchain.dev/what-is-an-agent/)
-
-[^7]: [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
-
-[^8]:
-    [Introduction to Agents
-    (HuggingFace)](https://huggingface.co/docs/smolagents/en/conceptual_guides/intro_agents)
+[^5]:
+    [Building effective agents (Anthorpic)
+    ](https://www.anthropic.com/research/building-effective-agents)

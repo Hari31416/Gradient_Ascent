@@ -1,0 +1,167 @@
+---
+title: 'Encoder, Decoder, and Encoder-Decoder Model'
+date: '2025-01-12'
+tags: ['llm', 'transformer', 'nlp']
+draft: true
+summary: 'Understanding the differences between encoder-only, decoder-only, and encoder-decoder models in the context of generative AI.'
+images: ['/static/images/2025/encoder_decoder_architecture/banner.png']
+layout: PostBanner
+---
+
+Generative AI has taken the world by storm. Most of this has to do with the emergence of large language models (LLMs). If you are not living in a cave, there is a high chance that you have heard and used the frontier LLMs such as ChatGPT, Gemini, and Claude. Even though these models are used by many, most have only a vague understanding of how they work. This article does not answer all the questions you might ask related to working with an LLM, instead, it tries to clear up some terminology. Specifically, this article deals with understanding different types of Transformers (more about them in the next section), how and why they work, and a comparison among them. Understanding these will give you a better intuition about how LLMs work. If you are a developer in generative AI and want to be familiar with the technical jargon used in the field, this article is best suited for you.
+
+# The Transformer
+
+# Encoder-Only
+
+Encodes input data (e.g., text, image, or audio) into a fixed-length or variable-length representation, often referred to as a latent vector or embedding.
+
+## **Key Characteristics**
+
+- Extracts high-level features from the input.
+- It is commonly used for tasks like classification, regression, and feature extraction.
+
+## Tradeoffs
+
+### Advantages
+
+Efficient at summarizing input data into a meaningful representation. Works well when the output is straightforward (e.g., class labels).
+
+### Disadvantages
+
+Limited flexibility for tasks requiring structured or sequential output.
+
+## **Example** Use Cases
+
+- Sentiment analysis.
+- Image classification.
+
+# Decoder-Only
+
+Maps a latent representation (often provided by an encoder) to an output space (e.g., text, image, or audio).
+
+## **Key Characteristics**
+
+- Generates structured or sequential data from high-level representations.
+- Often used for generation tasks, like text generation or image synthesis.
+
+## Tradeoffs
+
+### Advantages
+
+Flexible and powerful for creating complex outputs.
+
+### Disadvantages
+
+Requires meaningful latent representations, which may involve pretraining or pairing with an encoder.
+
+## **Example** Use Cases
+
+- Text generation.
+- Image synthesis.
+
+# Encoder-Decoder
+
+Combines an encoder and a decoder to perform tasks where input and output are both complex and structured.
+
+## **Key Characteristics**
+
+- Encoder maps the input to a latent representation, and the decoder transforms this representation into the desired output.
+- Designed for tasks requiring mapping from one structured space to another (e.g., text-to-text, image-to-text).
+
+## Tradeoffs
+
+### Advantages
+
+- Highly versatile, enabling complex transformations.
+- Often achieves state-of-the-art performance on structured input-output tasks.
+
+### Disadvantages
+
+- Computationally intensive due to the dual architecture.
+- Requires large amounts of data for training to ensure proper alignment between input and output.
+
+## **Example** Use Cases
+
+- Machine translation (e.g., English to French).
+- Text summarization.
+- Image captioning.
+
+# A Summary
+
+## Comparison Table
+
+| **Aspect**           | **Encoder**                | **Decoder**                       | **Encoder-Decoder**      |
+| -------------------- | -------------------------- | --------------------------------- | ------------------------ |
+| **Primary Function** | Extract input features     | Generate output from latent space | Map input to output      |
+| **Input Type**       | Structured (text, image)   | Latent representation             | Structured (text, image) |
+| **Output Type**      | Fixed/simple               | Complex/structured                | Complex/structured       |
+| **Example Task**     | Sentiment analysis         | Text generation                   | Machine translation      |
+| **Strengths**        | Efficient, straightforward | Flexible for generation           | Versatile, high accuracy |
+| **Weaknesses**       | Limited output flexibility | Requires good embeddings          | High computational cost  |
+
+## Difference Between Encoder-Only and Decoder-Only Models
+
+- **Causal Masking vs. Bidirectional Attention**:
+  - **GPT (Decoder)**: Uses **causal masking** in the self-attention mechanism to ensure that each token can only attend to itself and previous tokens. This is crucial for its autoregressive nature, where predictions are made one token at a time.
+  - **BERT (Encoder)**: Uses **bidirectional self-attention**, allowing every token to attend to all other tokens in the input sequence. This enables BERT to build a richer understanding of the context by considering both past and future tokens simultaneously.
+- **Objective**:
+  - **GPT**: Trained with an **autoregressive objective**, predicting the next token in a sequence given all prior tokens.
+  - **BERT**: Trained with a **masked language modeling (MLM) objective**, where random tokens in the input are masked, and the model learns to predict these masked tokens using context from both sides.
+- **Architecture Intent**:
+  - **GPT**: Primarily designed for **text generation** tasks, where output is sequentially generated.
+  - **BERT**: Primarily designed for **representation learning** and **understanding tasks** like classification, question answering, and sentence similarity.
+- **Token Position Usage**:
+  - **GPT**: Processes tokens one at a time during generation and keeps track of positional information using causal masking.
+  - **BERT**: Processes the entire sequence simultaneously, leveraging positional embeddings for bidirectional understanding.
+- **Output**:
+  - **GPT**: Outputs a probability distribution over the next token in the vocabulary at each step.
+  - **BERT**: Outputs a contextualized embedding for each token in the input sequence, which can be used for downstream tasks.
+
+## When to Prefer an Encoder-Decoder Model
+
+### 1. **Complex Input-to-Output Mapping**
+
+- Use Case: When the task involves transforming structured input into structured output, such as translating text, summarizing documents, or generating captions for images.
+- Reason: Encoder-decoder models excel at creating a high-level representation of the input (via the encoder) and decoding it into a structured output (via the decoder).
+- Example: Machine Translation (e.g., English to French).
+
+### 2. **Tasks Requiring Explicit Input and Output Representations**
+
+- Use Case: When both input and output are sequences with different structures, such as converting code snippets into comments or converting audio to text.
+- Reason: The encoder processes the input into a latent space that the decoder effectively converts into the desired structured output.
+- Example: Automatic Speech Recognition (ASR).
+
+### 3. **Multi-modal Applications**
+
+- Use Case: When inputs and outputs are from different modalities, like generating text from images or vice versa.
+- Reason: The encoder processes one modality (e.g., images) to extract features, while the decoder generates the output in another modality (e.g., text).
+- Example: Image Captioning.
+
+### 4. **Long-Context Dependence**
+
+- Use Case: When the task requires capturing long-range dependencies in the input and generating coherent long-form outputs.
+- Reason: The encoder aggregates information across the entire input sequence, creating a compact representation that the decoder uses for generation.
+- Example: Document Summarization.
+
+### 5. **Tasks Requiring Autoregressive Generation**
+
+- Use Case: When generating outputs step-by-step while maintaining a clear relationship with the input, such as translating a paragraph.
+- Reason: The encoder captures the input context, while the decoder predicts the output autoregressively.
+- Example: Question Answering with structured answers.
+
+# Conclusion
+
+# LinkedIn Intro
+
+# Sources
+
+https://arxiv.org/pdf/2304.04052 (Decoder-Only or Encoder-Decoder? Interpreting Language Model as a Regularized Encoder-Decoder)
+
+[BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/pdf/1810.04805)
+
+https://cameronrwolfe.substack.com/p/decoder-only-transformers-the-workhorse
+
+https://nlp.seas.harvard.edu/annotated-transformer/
+
+https://towardsdatascience.com/transformers-explained-visually-not-just-how-but-why-they-work-so-well-d840bd61a9d3

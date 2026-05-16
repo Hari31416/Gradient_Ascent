@@ -1,0 +1,39 @@
+---
+title: 'DBSCAN: Density-Based Spatial Clustering of Applications with Noise'
+date: '2026-03-04'
+tags: ['machine-learning', 'clustering', 'visualization', 'interactive']
+draft: true
+summary: Explore the mechanics of DBSCAN through an interactive visualization. Learn how epsilon and minPoints shape density-based clusters.
+---
+
+# DBSCAN: Understanding Density-Based Clustering
+
+Clustering is one of the most fundamental tasks in unsupervised learning. While algorithms like K-Means are popular, they often fail when clusters have irregular shapes or contain significant noise. Enter **DBSCAN** (Density-Based Spatial Clustering of Applications with Noise).
+
+## How it Works
+
+Unlike K-Means, which assumes spherical clusters, DBSCAN looks for "dense" regions in space. It uses two key hyperparameters:
+
+1.  **Epsilon ($\epsilon$)**: The maximum distance between two points for them to be considered as neighbors.
+2.  **MinPoints**: The minimum number of points required to form a dense region (a cluster).
+
+### Interactive Visualization
+
+Tweak the parameters below to see how DBSCAN identifies clusters and noise in real-time. Notice how a small $\epsilon$ creates many small clusters or labels everything as noise, while a large $\epsilon$ might merge distinct groups into one.
+
+<DBSCANVisualizer />
+
+## The Algorithm in a Nutshell
+
+1.  **Find Neighbors**: For each point, find all points within the distance $\epsilon$.
+2.  **Core Points**: If a point has at least `MinPoints` neighbors, it's a **core point**.
+3.  **Expand Cluster**: Start with a core point and recursively add all density-reachable points to its cluster.
+4.  **Noise**: If a point is not a core point and not reachable from any core point, it's labeled as **noise**.
+
+## Advantages of DBSCAN
+
+- **No need to specify K**: You don't need to guess the number of clusters beforehand.
+- **Arbitrary Shapes**: It can find clusters of any shape, even nested rings or intertwined shapes.
+- **Robust to Outliers**: It naturally identifies and ignores noise.
+
+Next time you're dealing with spatial data with irregular patterns, give DBSCAN a try!

@@ -1,7 +1,9 @@
 {
-  "visualization": 5,
-  "retrieval": 1,
-  "rag": 1,
+  "visualization": 7,
+  "retrieval": 2,
+  "rag": 3,
+  "vector-search": 1,
+  "db": 1,
   "machine-learning": 1,
   "clustering": 1,
   "interactive": 1,

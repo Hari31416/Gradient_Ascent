@@ -1,3 +1,4 @@
+import React from 'react'
 import TOCInline from 'pliny/ui/TOCInline'
 import Pre from 'pliny/ui/Pre'
 import BlogNewsletterForm from 'pliny/ui/BlogNewsletterForm'
@@ -6,6 +7,7 @@ import Image from './Image'
 import CustomLink from './Link'
 import TableWrapper from './TableWrapper'
 import { animationComponents } from './AnimationRegistry'
+import Mermaid from './Mermaid'
 
 export const components: MDXComponents = {
   Image,
@@ -14,5 +16,6 @@ export const components: MDXComponents = {
   pre: Pre,
   table: TableWrapper,
   BlogNewsletterForm,
+  Mermaid,
   ...animationComponents,
 }

@@ -4,6 +4,8 @@ import readingTime from 'reading-time'
 import { slug } from 'github-slugger'
 import path from 'path'
 import { fromHtmlIsomorphic } from 'hast-util-from-html-isomorphic'
+import { visit } from 'unist-util-visit'
+
 // Remark packages
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -143,6 +145,27 @@ export const Authors = defineDocumentType(() => ({
   computedFields,
 }))
 
+const remarkMermaid = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (tree: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    visit(tree, 'code', (node: any) => {
+      if (node.lang === 'mermaid') {
+        node.type = 'mdxJsxFlowElement'
+        node.name = 'Mermaid'
+        node.attributes = [
+          {
+            type: 'mdxJsxAttribute',
+            name: 'chart',
+            value: node.value,
+          },
+        ]
+        node.children = []
+      }
+    })
+  }
+}
+
 export default makeSource({
   contentDirPath: 'data',
   documentTypes: [Blog, Authors],
@@ -155,7 +178,9 @@ export default makeSource({
       remarkMath,
       remarkImgToJsx,
       remarkAlert,
+      remarkMermaid,
     ],
+
     rehypePlugins: [
       rehypeSlug,
       [

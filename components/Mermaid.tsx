@@ -93,13 +93,6 @@ export default function Mermaid({ chart }: MermaidProps) {
   }, [isFullscreen])
 
   // --- Inline interaction handlers ---
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    const zoomFactor = 1.1
-    const newScale = e.deltaY < 0 ? scale * zoomFactor : scale / zoomFactor
-    setScale(Math.min(Math.max(newScale, 0.5), 4))
-  }
-
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.button !== 0) return
     setIsDragging(true)
@@ -146,13 +139,6 @@ export default function Mermaid({ chart }: MermaidProps) {
   }
 
   // --- Fullscreen Modal interaction handlers ---
-  const handleModalWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    const zoomFactor = 1.1
-    const newScale = e.deltaY < 0 ? modalScale * zoomFactor : modalScale / zoomFactor
-    setModalScale(Math.min(Math.max(newScale, 0.4), 6))
-  }
-
   const handleModalMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.button !== 0) return
     setModalIsDragging(true)
@@ -223,7 +209,6 @@ export default function Mermaid({ chart }: MermaidProps) {
       {/* Inline view block */}
       <div
         ref={inlineContainerRef}
-        onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -318,7 +303,6 @@ export default function Mermaid({ chart }: MermaidProps) {
               {/* Modal Body (Viewport) */}
               <div
                 ref={modalContainerRef}
-                onWheel={handleModalWheel}
                 onMouseDown={handleModalMouseDown}
                 onMouseMove={handleModalMouseMove}
                 onMouseUp={handleModalMouseUp}

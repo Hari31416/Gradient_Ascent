@@ -3,9 +3,9 @@
 
 import ExampleShowcase from '../data/blog/2026/June/md2pdf/ExampleShowcase'
 import DBSCANVisualizer from '../data/blog/2026/Mar/dbscan/DBSCANVisualizer'
-import CostCalculator from '../data/blog/2026/May/llm-costing-dimensions/CostCalculator'
-import ReasoningChart from '../data/blog/2026/May/llm-costing-dimensions/ReasoningChart'
-import TokenizerVisualizer from '../data/blog/2026/May/llm-costing-dimensions/TokenizerVisualizer'
+import CostCalculator from '../data/blog/2026/May/llm-costing-dimensions-shelved/CostCalculator'
+import ReasoningChart from '../data/blog/2026/May/llm-costing-dimensions-shelved/ReasoningChart'
+import TokenizerVisualizer from '../data/blog/2026/May/llm-costing-dimensions-shelved/TokenizerVisualizer'
 
 export const animationComponents = {
   ExampleShowcase,

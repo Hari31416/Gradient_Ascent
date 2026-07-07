@@ -5,6 +5,7 @@ import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
 import Image from '@/components/Image'
 import { GA } from 'pliny/analytics/GoogleAnalytics'
+import HeroSection from '@/components/HeroSection'
 
 const googleAnalyticsId = 'G-61Z6WVZ6PN'
 
@@ -15,14 +16,9 @@ export default function Home({ posts }) {
     <>
       <GA googleAnalyticsId={googleAnalyticsId} />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        <div
-          className="flex aspect-[3.5/1] w-full flex-col justify-end bg-cover bg-center md:space-y-5"
-          style={{ backgroundImage: `url(${siteMetadata.bannerImageUrl})` }}
-        >
-          <p className="text-xl leading-9 tracking-tight sm:text-xl sm:leading-10 md:text-2xl md:leading-14">
-            {siteMetadata.description}
-          </p>
-          <h1 className="pb-2 text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+        <div className="space-y-6 pb-8 pt-6">
+          <HeroSection />
+          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             Latest
           </h1>
         </div>

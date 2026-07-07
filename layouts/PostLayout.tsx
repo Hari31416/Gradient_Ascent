@@ -27,7 +27,7 @@ interface LayoutProps {
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags, images } = content
-  const basePath = path.split('/')[0]
+  const basePath = 'blog'
   const displayImage = images && images.length > 0 ? images[0] : ''
 
   return (

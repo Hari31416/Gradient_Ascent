@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 440" width="100%" height="100%" style="background-color: #0f172a; font-family: system-ui, -apple-system, sans-serif;">
+  <!-- Definitions for Gradients and Markers -->
+  <defs>
+    <linearGradient id="queryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="vectorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#6d28d9" />
+    </linearGradient>
+    <linearGradient id="keywordGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="rrfGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="outputGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#be185d" />
+    </linearGradient>
+    
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+    <marker id="arrow-vector" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a78bfa" />
+    </marker>
+    <marker id="arrow-keyword" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399" />
+    </marker>
+    <marker id="arrow-rrf" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fbbf24" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="425" y="36" fill="#f8fafc" font-size="20" font-weight="700" text-anchor="middle" letter-spacing="0.5">
+    Hybrid Search &amp; Reciprocal Rank Fusion (RRF) Pipeline
+  </text>
+  <text x="425" y="58" fill="#94a3b8" font-size="13" text-anchor="middle">
+    Combining Vector Semantic Distance &amp; Full-Text Keyword Match in Browser Database
+  </text>
+
+  <!-- Step 1: User Query Node -->
+  <g transform="translate(30, 180)">
+    <rect x="0" y="0" width="140" height="76" rx="12" fill="url(#queryGrad)" stroke="#60a5fa" stroke-width="1.5" />
+    <text x="70" y="32" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">User Query</text>
+    <text x="70" y="52" fill="#dbeafe" font-size="11" text-anchor="middle">Standalone Search</text>
+  </g>
+
+  <!-- Connecting Lines from Query to Branches -->
+  <path d="M 170 218 C 210 218, 210 125, 240 125" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-vector)" />
+  <path d="M 170 218 C 210 218, 210 310, 240 310" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-keyword)" />
+
+  <!-- Step 2A: Vector Search Branch -->
+  <g transform="translate(245, 80)">
+    <rect x="0" y="0" width="180" height="90" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" />
+    <rect x="0" y="0" width="180" height="28" rx="10" fill="url(#vectorGrad)" />
+    <text x="90" y="19" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">Vector Search (pgvector)</text>
+    <text x="15" y="46" fill="#c7d2fe" font-size="11">Cosine Similarity (HNSW)</text>
+    <text x="15" y="64" fill="#a5b4fc" font-size="10">Rank 1: Chunk #14 (score: 0.89)</text>
+    <text x="15" y="78" fill="#a5b4fc" font-size="10">Rank 2: Chunk #03 (score: 0.82)</text>
+  </g>
+
+  <!-- Step 2B: Keyword Search Branch -->
+  <g transform="translate(245, 265)">
+    <rect x="0" y="0" width="180" height="90" rx="10" fill="#064e3b" stroke="#10b981" stroke-width="1.5" />
+    <rect x="0" y="0" width="180" height="28" rx="10" fill="url(#keywordGrad)" />
+    <text x="90" y="19" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">Full-Text Search (ts_rank)</text>
+    <text x="15" y="46" fill="#a7f3d0" font-size="11">Keyword OR Match</text>
+    <text x="15" y="64" fill="#6ee7b7" font-size="10">Rank 1: Chunk #03 (rank: 0.45)</text>
+    <text x="15" y="78" fill="#6ee7b7" font-size="10">Rank 2: Chunk #21 (rank: 0.31)</text>
+  </g>
+
+  <!-- Connecting Lines to RRF Engine -->
+  <path d="M 425 125 C 465 125, 465 218, 490 218" fill="none" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrow-rrf)" />
+  <path d="M 425 310 C 465 310, 465 218, 490 218" fill="none" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-rrf)" />
+
+  <!-- Step 3: RRF Fusion Engine -->
+  <g transform="translate(495, 155)">
+    <rect x="0" y="0" width="175" height="126" rx="12" fill="#292524" stroke="#f59e0b" stroke-width="2" />
+    <rect x="0" y="0" width="175" height="32" rx="12" fill="url(#rrfGrad)" />
+    <text x="87" y="21" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">RRF Fusion Engine</text>
+    <text x="87" y="52" fill="#fef3c7" font-size="11" font-weight="600" text-anchor="middle">RRF = ∑ 1 / (60 + r)</text>
+    <text x="12" y="76" fill="#fde68a" font-size="10">• Merges vector &amp; keyword</text>
+    <text x="12" y="92" fill="#fde68a" font-size="10">• Eliminates single-path bias</text>
+    <text x="12" y="108" fill="#fde68a" font-size="10">• Re-ranks combined hits</text>
+  </g>
+
+  <!-- Connecting Line from RRF to Output -->
+  <path d="M 670 218 L 700 218" fill="none" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrow)" />
+
+  <!-- Step 4: Top Context Chunks -->
+  <g transform="translate(705, 170)">
+    <rect x="0" y="0" width="120" height="96" rx="12" fill="url(#outputGrad)" stroke="#f43f5e" stroke-width="1.5" />
+    <text x="60" y="28" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">Fused Context</text>
+    <text x="60" y="46" fill="#ffe4e6" font-size="11" text-anchor="middle">Top Chunks</text>
+    <rect x="12" y="56" width="96" height="28" rx="6" fill="#881337" opacity="0.8" />
+    <text x="60" y="74" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">Passed to LLM</text>
+  </g>
+</svg>

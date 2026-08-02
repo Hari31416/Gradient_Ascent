@@ -95,8 +95,8 @@ module.exports = () => {
     async redirects() {
       return [
         {
-          source: '/blog/:path+',
-          destination: '/:path+',
+          source: '/blog/:path((?!page/|tags/|$).*)',
+          destination: '/:path',
           permanent: true,
         },
       ]

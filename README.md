@@ -1,8 +1,14 @@
 # Gradient Ascent
 
-_Gradient Ascent_ is a blog exploring Artificial Intelligence, Machine Learning, Deep Learning, and modern AI engineering. Find the blog [here](https://blogs.hari31416.in/). I use the [Tailwind Nextjs Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog) template with some modifications.
+_Gradient Ascent_ is a technical blog exploring Artificial Intelligence, Machine Learning, Deep Learning, and modern AI engineering. Find the blog [here](https://blogs.hari31416.in/).
 
-All the code related to the blog posts can be found in [this repository](https://github.com/Hari31416/blog_scripts).
+This repository is a modified version of the [Tailwind Nextjs Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog). Codes (if any) related to individual blog posts and scripts can be found in [blog_scripts](https://github.com/Hari31416/blog_scripts).
+
+## Features and Customizations
+
+- **Interactive Plotly Charts** (`PlotlyChart.tsx`): Client-side dynamic rendering for data visualisations and mathematical plots directly within MDX.
+- **Interactive Mermaid Diagrams** (`Mermaid.tsx`): Dynamic diagram rendering with zoom, pan, reset, and a fullscreen modal viewer.
+- **Animation Registry** (`AnimationRegistry.tsx`): Auto-registered custom interactive algorithm animation components for inline visualization.
 
 ## Development
 

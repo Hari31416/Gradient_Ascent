@@ -8,9 +8,9 @@ const siteMetadata = {
   theme: 'system', // system, dark or light
   siteUrl: 'https://hari31416.github.io/Gradient_Ascent/',
   siteRepo: 'https://github.com/Hari31416/Gradient_Ascent',
-  siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/banner_no_bg.png`,
-  bannerImageUrl: `${process.env.BASE_PATH || ''}/static/images/banner_no_bg.png`,
+  siteLogo: `${process.env.BASE_PATH || ''}/static/favicons/hero.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/favicons/banner.png`,
+  bannerImageUrl: `${process.env.BASE_PATH || ''}/static/favicons/banner.png`,
   email: 'harikeshkumar0926@gmail.com',
   github: 'https://github.com/hari31416',
   x: 'https://twitter.com/hari31416',

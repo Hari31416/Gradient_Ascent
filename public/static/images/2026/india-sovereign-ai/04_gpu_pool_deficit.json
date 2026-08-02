@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "y": [
+        "India Today (~50k)",
+        "IndiaAI 2026 Target (~100k)",
+        "Single US Cluster (~300k)",
+        "China Footprint (~1.35M)",
+        "US Footprint (~4.75M)"
+      ],
+      "x": [50000, 100000, 300000, 1350000, 4750000],
+      "type": "bar",
+      "orientation": "h",
+      "text": [" 50k GPUs", " 100k GPUs", " 300k GPUs", " 1.35M GPUs", " 4.75M GPUs"],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "marker": {
+        "color": ["#d97706", "#10b981", "#2563eb", "#0284c7", "#6366f1"]
+      }
+    }
+  ],
+  "layout": {
+    "title": "High-End AI Accelerator Footprint Comparison",
+    "margin": { "l": 160, "r": 80 },
+    "xaxis": {
+      "type": "log",
+      "automargin": true,
+      "title": "High-End Accelerators / H100-Equivalents (Log Scale)"
+    },
+    "yaxis": {
+      "automargin": true
+    }
+  }
+}

@@ -8,6 +8,7 @@ import CustomLink from './Link'
 import TableWrapper from './TableWrapper'
 import { animationComponents } from './AnimationRegistry'
 import Mermaid from './Mermaid'
+import PlotlyChart from './PlotlyChart'
 
 export const components: MDXComponents = {
   Image,
@@ -17,5 +18,6 @@ export const components: MDXComponents = {
   table: TableWrapper,
   BlogNewsletterForm,
   Mermaid,
+  PlotlyChart,
   ...animationComponents,
 }

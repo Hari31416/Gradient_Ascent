@@ -3,60 +3,51 @@ title: "Quantifying India's Sovereign AI Infrastructure Deficit: Current State v
 date: '2026-08-02'
 tags: ['sovereign-ai', 'data-center', 'compute', 'india', 'gpu', 'infrastructure', 'ai-policy']
 draft: false
-summary: "An empirical deep-dive into India's sovereign AI infrastructure gap, quantifying data-centre power capacity, accelerator pools, per-capita intensity, and compute costs against US, China, and EU 2030 trajectories."
+summary: "An empirical analysis of India's sovereign AI compute deficit, mapping current state vs 2030 trajectories across data center power, GPU pools, per-capita intensity, and compute economics against global benchmarks."
 images: ['/static/images/2026/india-sovereign-ai/hero.png']
 layout: PostBanner
 ---
 
 <details className="mb-5 text-lg font-bold">
   <summary>Table of Contents</summary>
-  <TOCInline toc={props.toc} exclude="Quantifying India's Sovereign AI Infrastructure Deficit" />
+  <TOCInline toc={props.toc} exclude="Introduction" />
 </details>
 
-# Quantifying India's Sovereign AI Infrastructure Deficit
+# Introduction
 
 As artificial intelligence shifts from software applications to national infrastructure, the fundamental substrate of AI power (data-centre IT capacity measured in Gigawatts and high-end GPU accelerator clusters) has become a key determinant of technological independence. To understand where India actually stands today compared to leading technology blocs like the United States, China, and the European Union, I wanted to conduct a rigorous, empirical audit of global compute capacity.
 
 To build this report, I leveraged deep-research capabilities across multiple AI systems (Gemini, ChatGPT, Claude, and Grok) to collect operational data, policy whitepapers, and market projections. I then harmonized the findings, resolved cross-source contradictions, and cross-fact-checked the dataset against primary trade releases (Wood Mackenzie, Cushman & Wakefield, CEEW, PIB, and Stanford HAI) to evaluate how far domestic build-outs close (or fail to close) the sovereign compute deficit by 2030.
 
-The high-level synthesis below outlines current operational baselines and 2030 capacity projections across all four major technology regions.
+This report evaluates the landscape in two parts; first establishing the empirical scale of India's infrastructure deficit across power, silicon, and capital, and then mapping the strategic pivots, cost advantages, and application-layer models that define a viable sovereign roadmap.
 
-<figure className="my-6">
-  <img
-    src="/static/images/2026/india-sovereign-ai/hero.png"
-    alt="India Sovereign AI Infrastructure Deficit Overview"
-  />
-  <figcaption>
-    Figure 1: Current Installed Data-Centre IT Capacity (GW) vs. 2030 Projections across key
-    technology blocs.
-  </figcaption>
-</figure>
+> [!NOTE]
+> **Methodology & Data Disclaimer:**
+>
+> - **Baseline Midpoints:** Where industry trackers report a baseline range (e.g., India's current 1.3–2.2 GW operational IT load), charts use the standardized midpoint (**1.8 GW**) while text preserves explicit source-specific bounds (CareEdge/Cushman: 1.3–1.5 GW; Wood Mackenzie: 2.2 GW).
+> - **2030 Trajectory Scenarios:** 2030 projections are modeled across both conservative industry consensus (**5.25 GW** midpoint) and optimistic upper-bound policy targets (**12.0 GW** Wood Mackenzie forecast).
+> - **Accelerator Normalization:** High-end accelerator footprint metrics normalize mixed hardware pools (H100, H200, B200, Ascend 910B/C) into H100-equivalent compute units.
+> - **Currency References:** Financial metrics use 2026 prevailing exchange reference rates ($1 ≈ ₹93 midpoint, baseline range ₹90–95).
 
-## Executive Snapshot
+## Part I: Quantifying the Structural Deficit
 
-The table below summarizes the core capacity, hardware, per-capita intensity, and capital investment metrics comparing India's current position and projected 2030 trajectories against global peers.
-
-| Metric                                 | India (Current)                                  | India 2030 (Range)                                          | United States (Current → 2030) | China (Current → 2030)         | European Union (Current → 2030)        |
-| :------------------------------------- | :----------------------------------------------- | :---------------------------------------------------------- | :----------------------------- | :----------------------------- | :------------------------------------- |
-| **DC IT Capacity**                     | 1.3–2.2 GW [^1], [^2]                            | 4–6.5 GW (conservative) [^3] to **12 GW** (optimistic) [^1] | 53.7 GW [^4] → 100+ GW [^5]    | 32.0 GW [^6] → ~60.0 GW [^6]   | ~12.0 GW [^7] → 25–30 GW [^7]          |
-| **High-End GPUs / Accelerators**       | 38,231 (IndiaAI) [^8] + private ≈ 45–60k         | Target ~100k by late-2026 [^15]; no firm 2030 target        | ~4.5–5.0 million [^9]          | ~1.2–1.5 million [^9]          | ~0.4–0.5 million [^9]                  |
-| **MW per 1 M Internet Users**          | ~1.5 MW [^10]                                    | Low single digits even at 12 GW                             | ~174 MW [^10]                  | ~30 MW [^10]                   | ~28 MW [^10]                           |
-| **2026 Annual AI / Hyperscaler Capex** | ~\$3–5 B private [^11] + ~\$1.25 B IndiaAI [^11] | Continued policy + private build-out                        | **\$660–725 B** [^12]          | ~\$35–50 B + state funds [^13] | Modest private + public leverage [^14] |
-
-**Core Takeaway:** Even under the most optimistic published forecast (Wood Mackenzie's projection of 12 GW by 2030 [^1]), India's absolute data-centre capacity remains roughly **1/5 of China's** [^6] and **1/8 of the United States'** [^5] projected 2030 base.
-
-## Data Center Capacity: The Core Deficit
+### Data Center Capacity: The Core Gap
 
 Data centre capacity, measured in Megawatts (MW) or Gigawatts (GW) of delivered IT load, forms the foundation of all digital and AI workloads.
 
-### Current Baseline (2025 / Early 2026)
+<PlotlyChart
+  src="/static/images/2026/india-sovereign-ai/01_dc_capacity.json"
+  caption="Figure 1: Current Installed Data-Centre IT Capacity (GW) vs. 2030 Projections across key technology blocs."
+/>
+
+#### Current Baseline (2025 / Early 2026)
 
 - **United States:** ~53.7 GW installed IT capacity, representing approximately 44% of global ~122.2 GW capacity [^4].
 - **China:** ~32.0 GW operational IT capacity at end-2025 [^6].
 - **European Union:** ~12.0 GW aggregate capacity across key FLAP-D and regional hubs [^7].
 - **India:** 1.3–2.2 GW total operational IT load [^1], [^2]. Lower-bound industry trackers (Cushman & Wakefield, CareEdge) report ~1.3–1.5 GW [^2], [^3], while Wood Mackenzie reports an operational baseline of 2.2 GW in 2025 [^1].
 
-### 2030 Projections across Regions
+#### 2030 Projections across Regions
 
 | Region                   | 2030 Projected Capacity | Baseline Source / Policy Drivers                                  |
 | :----------------------- | :---------------------- | :---------------------------------------------------------------- |
@@ -66,21 +57,16 @@ Data centre capacity, measured in Megawatts (MW) or Gigawatts (GW) of delivered 
 | **India (Optimistic)**   | **12.0 GW**             | Wood Mackenzie report (July 2026) [^1]                            |
 | **India (Conservative)** | 4.0–6.5 GW              | CareEdge Ratings & Rubix Data Sciences consensus [^3]             |
 
-Under the conservative trajectory (4.0–6.5 GW), India's total 2030 data-centre infrastructure would remain comparable to the size of a single large US metropolitan market today.
+Under the conservative trajectory (4.0–6.5 GW), India's total 2030 data-centre infrastructure would remain comparable to the size of a single large US metropolitan market today. Even under the most optimistic published forecast (Wood Mackenzie's projection of 12 GW by 2030 [^1]), India's absolute data-centre capacity remains roughly **1/5 of China's** [^6] and **1/8 of the United States'** [^5] projected 2030 base.
 
-<figure className="my-6">
-  <img
-    src="/static/images/2026/india-sovereign-ai/02_deficit_absolute_gap.png"
-    alt="Absolute Capacity Deficit Comparison"
-  />
-  <figcaption>
-    Figure 2: Absolute IT capacity gap (GW) between India, China, and the United States.
-  </figcaption>
-</figure>
+<PlotlyChart
+  src="/static/images/2026/india-sovereign-ai/02_deficit_absolute_gap.json"
+  caption="Figure 2: Absolute IT capacity gap (GW) between India, China, and the United States."
+/>
 
-## Compute Pool Deficit: GPUs and Accelerators
+### Compute Pool Deficit: GPUs and Accelerators
 
-Hardware accelerator pools (H100-equivalent GPUs) dictate frontier training capability.
+Hardware accelerator pools (H100-equivalent GPUs) dictate frontier training and inference capability.
 
 | Compute Pool                                | Scale (H100-equivalents)     | Ratio to India Today               |
 | :------------------------------------------ | :--------------------------- | :--------------------------------- |
@@ -92,17 +78,12 @@ Hardware accelerator pools (H100-equivalent GPUs) dictate frontier training capa
 
 Through the IndiaAI Mission (MeitY / PIB), the Government of India has onboarded **38,231 GPUs** made accessible at subsidised rates [^8]. While this provides an essential public good for academic research and early-stage startups, the total national pool remains smaller than individual frontier clusters operated by major technology firms in the US.
 
-<figure className="my-6">
-  <img
-    src="/static/images/2026/india-sovereign-ai/04_gpu_pool_deficit.png"
-    alt="GPU Pool Comparison"
-  />
-  <figcaption>
-    Figure 3: High-end AI accelerator footprint comparison across regions and clusters.
-  </figcaption>
-</figure>
+<PlotlyChart
+  src="/static/images/2026/india-sovereign-ai/04_gpu_pool_deficit.json"
+  caption="Figure 3: High-end AI accelerator footprint comparison across regions and clusters."
+/>
 
-## Per-Capita Compute Intensity: The Visceral Disparity
+### Per-Capita Compute Intensity: The Deep Disparity
 
 Dividing installed IT power capacity by active internet-user populations highlights the domestic availability of compute infrastructure per user.
 
@@ -111,34 +92,62 @@ Dividing installed IT power capacity by active internet-user populations highlig
 - **European Union:** ~30 MW per 1 million internet users [^10].
 - **India:** **~1.5 MW** per 1 million internet users [^10].
 
-<figure className="my-6">
-  <img
-    src="/static/images/2026/india-sovereign-ai/03_mw_per_million_users.png"
-    alt="MW per Million Internet Users Disparity"
-  />
-  <figcaption>Figure 4: Per-capita compute intensity (MW per 1 million internet users).</figcaption>
-</figure>
+<PlotlyChart
+  src="/static/images/2026/india-sovereign-ai/03_mw_per_million_users.json"
+  caption="Figure 4: Per-capita compute intensity (MW per 1 million internet users)."
+/>
 
 India's per-user compute provisioning stands at approximately **1/115th of the United States** and about **1/20th of China or the EU** [^10]. This metric captures the structural scarcity experienced by domestic researchers, enterprises, and developers seeking locally hosted high-density compute.
 
-## Training vs. Inference: Why the Deficit Is Not Uniform
+### Capital Deployment: Investment, CAPEX, and R&D Spend
+
+The capital intensity of AI infrastructure has become the clearest dividing line between technology blocs. The United States is funding the build-out primarily through private hyperscaler balance sheets; China combines large state guidance funds with platform capex; the EU leans on public procurement leverage; India remains an order of magnitude smaller on both private and public absolute spend.
+
+| Category                              | United States                                                                             | China                                                                     | European Union                                                           | India                                                                 |
+| :------------------------------------ | :---------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ | :----------------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| **2026 Big Tech / Hyperscaler Capex** | ~\$680–725 B (Amazon ~\$200 B, MSFT ~\$190 B, GOOG ~\$175–185 B, Meta ~\$115–145 B) [^12] | ~\$35–50 B (Alibaba, Tencent, ByteDance, Baidu) + large state funds [^13] | Modest private; €30 B+ mobilised for AI Gigafactories (multi-year) [^14] | ~\$3–5 B annualised private DC; ~\$15–28 B multi-year announced [^11] |
+| **Private AI VC (Recent Annual)**     | ~\$160–286 B (dominant global share) [^9]                                                 | ~\$12–14 B (excludes much state capital) [^9]                             | ~\$8–16 B aggregate [^9]                                                 | ~\$0.6–2 B (application-heavy) [^9]                                   |
+| **Primary Sovereign Subsidy**         | CHIPS Act \$52.7 B + NSF/DOE                                                              | Big Fund Phase III ~\$47.5 B + provincial funds [^13]                     | EuroHPC ~€8–10 B; InvestAI / Gigafactories leverage [^14]                | IndiaAI ~\$1.25 B (5 yr); Semiconductor Mission ~\$9–13 B [^8], [^18] |
+
+<PlotlyChart
+  src="/static/images/2026/india-sovereign-ai/08_global_ai_investment_share.json"
+  caption="Figure 5: Global AI Infrastructure Capex Distribution and Private VC Share across regions (2026)."
+/>
+
+- **United States:** Private capital intensity is the defining feature. A handful of companies are spending more in a single year than the cumulative multi-year public programmes of most other regions combined.
+- **China:** Disclosed private AI VC appears modest relative to output. A large share of resources flows through state guidance funds (such as Big Fund Phase III) and state-linked enterprises rather than classic venture structures.
+- **European Union:** Public capital is used as an anchor to de-risk private investment (EuroHPC, InvestAI, AI Gigafactories) rather than to match hyperscaler scale directly.
+- **India:** Absolute public and private numbers remain small. The IndiaAI Mission (\~\$1.25 B over five years) and Semiconductor Mission (~\$9–13 B range) are meaningful policy signals, but private DC commitments in the low tens of billions multi-year are still a fraction of a single US hyperscaler's annual guidance.
+
+### Physical Constraints: Grid and Power-Delivery Readiness
+
+Installed IT load (GW) can only operate if power delivery and cooling resources are available.
+
+- **United States:** Grid power interconnection queue delays have become the primary constraint for data-centre development [^29], [^30].
+- **China:** State-level planning and generation expansion provide headroom, though regional transmission limits affect eastern demand centers [^6].
+- **India:** Data centres face dual constraints in **power grid capacity** and **water availability**. CEEW research highlights structural tensions between utility (discom) allocations, open-access renewable routing, and rising water consumption for cooling (projected to increase from 150B Litres in 2024 to 358B Litres by 2030) [^31]. High average Power Usage Effectiveness (PUE 1.4–1.6 vs global best-in-class 1.1–1.25, where 1.0 represents perfect efficiency) [^17] increases effective energy requirements per unit of IT capacity.
+
+<PlotlyChart
+  src="/static/images/2026/india-sovereign-ai/05_trajectory_to_2030.json"
+  caption="Figure 6: Data-centre capacity trajectories (2025–2030) highlighting the absolute scale gap."
+/>
+
+## Part II: The Strategic Pivot — Asymmetric Advantages & Pathways
+
+### Training vs. Inference: Why the Deficit Is Not Uniform
 
 Raw accelerator counts and GW figures are primarily driven by **frontier model training**. However, compute requirements are shifting across model lifecycles:
 
 - **Shifting Workload Share:** Industry analyses project that **inference will account for roughly two-thirds of all AI compute in 2026** (up from ~33% in 2023 and ~50% in 2025) [^23].
 - **Lifetime Economics:** Over the operational lifecycle of a deployed model, inference accounts for **80–90% of total compute cost** [^24].
 
-<figure className="my-6">
-  <img
-    src="/static/images/2026/india-sovereign-ai/07_training_vs_inference_shift.png"
-    alt="AI Compute Distribution Shift: Training vs Inference"
-  />
-  <figcaption>
-    Figure 5: Global AI compute volume shift from Model Training to Model Inference (2023–2026).
-  </figcaption>
-</figure>
+<PlotlyChart
+  src="/static/images/2026/india-sovereign-ai/07_training_vs_inference_shift.json"
+  height={480}
+  caption="Figure 7: Global AI compute volume shift from Model Training to Model Inference (2023–2026)."
+/>
 
-### Strategic Implications for Sovereign AI
+#### Strategic Implications for Sovereign AI
 
 Matching US or Chinese frontier _training_ clusters dollar-for-dollar may not be necessary or feasible in the near term. A targeted sovereign strategy focused on:
 
@@ -149,73 +158,24 @@ Matching US or Chinese frontier _training_ clusters dollar-for-dollar may not be
 
 can extract substantial utility from a smaller GPU base. India's enterprise AI adoption rate (~59%) [^21] positions it to capture value at the application and inference layer.
 
-## Cost of Compute: IndiaAI Rates vs. Global Commercial Pricing
+### Cost of Compute: IndiaAI Subsidies vs. Global Commercial Rates
 
-| Provider / Pool                         | Approx. H100-Class Rate (2026)    | Notes / Source                               |
-| :-------------------------------------- | :-------------------------------- | :------------------------------------------- |
-| **IndiaAI Mission (Subsidised)**        | **₹65–67 per GPU-hour** (~\$0.76) | Available to startups & academia [^8], [^25] |
-| **Indian Commercial Reference**         | ~₹115 per GPU-hour (~\$1.38)      | Pre-subsidy domestic market reference [^25]  |
-| **Specialist Clouds (Lambda / RunPod)** | ~\$2.00–\$4.00 per GPU-hour       | On-demand H100 pricing [^26]                 |
-| **CoreWeave (HGX H100/H200)**           | ~\$6.16–\$6.31 per GPU-hour       | Dedicated node pricing [^27]                 |
-| **Major Hyperscalers (AWS / Azure)**    | ~\$6.00–\$12.00+ per GPU-hour     | On-demand instance pricing [^26], [^28]      |
+| Provider / Pool                         | Approx. H100-Class Rate (2026)           | Notes / Source                               |
+| :-------------------------------------- | :--------------------------------------- | :------------------------------------------- |
+| **IndiaAI Mission (Subsidised)**        | **₹65–67 per GPU-hour** (~\$0.70–\$0.72) | Available to startups & academia [^8], [^25] |
+| **Indian Commercial Reference**         | \~₹115 per GPU-hour (~\$1.24)            | Pre-subsidy domestic market reference [^25]  |
+| **Specialist Clouds (Lambda / RunPod)** | ~\$2.00–\$4.00 per GPU-hour              | On-demand H100 pricing [^26]                 |
+| **CoreWeave (HGX H100/H200)**           | ~\$6.16–\$6.31 per GPU-hour              | Dedicated node pricing [^27]                 |
+| **Major Hyperscalers (AWS / Azure)**    | ~\$6.00–\$12.00+ per GPU-hour            | On-demand instance pricing [^26], [^28]      |
 
-<figure className="my-6">
-  <img
-    src="/static/images/2026/india-sovereign-ai/06_cost_of_compute_comparison.png"
-    alt="H100 Hourly Compute Cost Comparison"
-  />
-  <figcaption>
-    Figure 6: Hourly cost comparison for H100-class compute across global pools (\$/GPU-hour).
-  </figcaption>
-</figure>
+<PlotlyChart
+  src="/static/images/2026/india-sovereign-ai/06_cost_of_compute.json"
+  caption="Figure 8: Hourly cost comparison for H100-class compute across global pools ($/GPU-hour)."
+/>
 
 IndiaAI's subsidised rate of ₹65–67/hour is roughly **3–8× lower** than Western on-demand H100 pricing [^8], [^25], [^26]. While subsidies do not increase absolute physical capacity, they lower economic barriers for domestic developers running fine-tuning and inference workloads.
 
-## Grid and Power-Delivery Readiness: The Physical Bottleneck
-
-Installed IT load (GW) can only operate if power delivery and cooling resources are available.
-
-- **United States:** Grid power interconnection queue delays have become the primary constraint for data-centre development [^29], [^30].
-- **China:** State-level planning and generation expansion provide headroom, though regional transmission limits affect eastern demand centers [^6].
-- **India:** Data centres face dual constraints in **power grid capacity** and **water availability**. CEEW research highlights structural tensions between utility (discom) allocations, open-access renewable routing, and rising water consumption for cooling (projected to increase from 150B Litres in 2024 to 358B Litres by 2030) [^31]. High average Power Usage Effectiveness (PUE 1.4–1.6 vs global best-in-class 1.1–1.25) [^17] increases effective energy requirements per unit of IT capacity.
-
-<figure className="my-6">
-  <img
-    src="/static/images/2026/india-sovereign-ai/05_trajectory_to_2030.png"
-    alt="Data Center Trajectory to 2030"
-  />
-  <figcaption>
-    Figure 7: Data-centre capacity trajectories (2025–2030) highlighting the absolute scale gap.
-  </figcaption>
-</figure>
-
-## Investment, CAPEX, and R&D Spend
-
-The capital intensity of AI infrastructure has become the clearest dividing line between technology blocs. The United States is funding the build-out primarily through private hyperscaler balance sheets; China combines large state guidance funds with platform capex; the EU leans on public procurement leverage; India remains an order of magnitude smaller on both private and public absolute spend.
-
-| Category                              | United States                                                                                 | China                                                                     | European Union                                                           | India                                                                 |
-| :------------------------------------ | :-------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ | :----------------------------------------------------------------------- | :-------------------------------------------------------------------- |
-| **2026 Big Tech / Hyperscaler Capex** | ~\$660–725 B (Amazon ~\$200 B, MSFT ~\$120–190 B, GOOG ~\$175–185 B, Meta ~\$115–145 B) [^12] | ~\$35–50 B (Alibaba, Tencent, ByteDance, Baidu) + large state funds [^13] | Modest private; €30 B+ mobilised for AI Gigafactories (multi-year) [^14] | ~\$3–5 B annualised private DC; ~\$15–28 B multi-year announced [^11] |
-| **Private AI VC (Recent Annual)**     | ~\$160–286 B (dominant global share) [^9]                                                     | ~\$12–14 B (excludes much state capital) [^9]                             | ~\$8–16 B aggregate [^9]                                                 | ~\$0.6–2 B (application-heavy) [^9]                                   |
-| **Primary Sovereign Subsidy**         | CHIPS Act \$52.7 B + NSF/DOE                                                                  | Big Fund Phase III ~\$47.5 B + provincial funds [^13]                     | EuroHPC ~€8–10 B; InvestAI / Gigafactories leverage [^14]                | IndiaAI ~\$1.25 B (5 yr); Semiconductor Mission ~\$9–13 B [^8], [^18] |
-
-<figure className="my-6">
-  <img
-    src="/static/images/2026/india-sovereign-ai/08_global_ai_investment_share.png"
-    alt="Global AI Investment and Infrastructure Capex Distribution"
-  />
-  <figcaption>
-    Figure 8: Global AI Infrastructure Capex Distribution and Private VC Share across regions
-    (2026).
-  </figcaption>
-</figure>
-
-- **United States:** Private capital intensity is the defining feature. A handful of companies are spending more in a single year than the cumulative multi-year public programmes of most other regions combined.
-- **China:** Disclosed private AI VC appears modest relative to output. A large share of resources flows through state guidance funds (such as Big Fund Phase III) and state-linked enterprises rather than classic venture structures.
-- **European Union:** Public capital is used as an anchor to de-risk private investment (EuroHPC, InvestAI, AI Gigafactories) rather than to match hyperscaler scale directly.
-- **India:** Absolute public and private numbers remain small. The IndiaAI Mission (\~\$1.25 B over five years) and Semiconductor Mission (~\$9–13 B range) are meaningful policy signals, but private DC commitments in the low tens of billions multi-year are still a fraction of a single US hyperscaler's annual guidance.
-
-## Frontier Models, IP, and Talent Density
+### IP, Talent Density, and Enterprise Adoption
 
 Technological output is visible in the volume and quality of frontier models, patent filings, research publications, and the retention of top-tier researchers.
 
@@ -228,14 +188,14 @@ Technological output is visible in the volume and quality of frontier models, pa
 | **Top-Tier Talent Retention**      | ~52% of elite AI researchers [^9]       | ~18% [^9]                            | ~10% aggregate [^9]                      | High graduate volume; net brain drain of architects [^9], [^20] |
 | **Enterprise AI Adoption**         | ~50–55% [^21]                           | ~50% [^21]                           | ~20% (higher in large enterprises) [^21] | ~59% (reported global leader in adoption rate) [^21]            |
 
-### Key Structural Takeaways
+#### Key Structural Takeaways
 
 - **Models and Benchmarks:** The United States continues to produce the largest number of notable frontier models. China's performance gap on major benchmarks has narrowed dramatically (to roughly 2.7 percentage points by early 2026). India has begun releasing sovereign and multilingual models (e.g. Sarvam, Krutrim), but is not yet competitive at the global frontier.
 - **Patents and Publications:** China leads decisively on raw patent volume (~70% of global AI patents). The United States retains an edge on high-impact, highly cited patents and selective conference oral papers. India's patent share remains under 1%, though its publication share (~5–8%) is growing from a low base.
 - **Talent Retention:** The United States attracts and retains ~52% of elite global AI researchers. India produces a large volume of STEM graduates and hosts ~20% of the world's semiconductor design engineers, yet experiences a net outflow of senior architecture-level talent to US and European labs.
 - **Enterprise Adoption:** Enterprise AI adoption in India (~59%) leads major surveyed economies. High adoption creates an active domestic market for model fine-tuning, inference serving, and application-layer deployment.
 
-## Strategic Imperatives and Asymmetric Advantages
+### Strategic Imperatives and Sovereign Roadmap
 
 While India faces an absolute capacity deficit in training-scale infrastructure, the domestic ecosystem possesses key competitive structural factors:
 
@@ -246,8 +206,6 @@ While India faces an absolute capacity deficit in training-scale infrastructure,
 - **Public Compute Subsidies:** IndiaAI provides competitive public GPU hourly rates [^8], [^25].
 
 A sustainable sovereign roadmap prioritizes expanding public compute utilization, upgrading power efficiency (PUE optimization), and establishing dedicated domestic inference infrastructure.
-
-## References
 
 [^1]: Wood Mackenzie, “India data centre capacity to reach 12 GW by 2030,” press release, 27 July 2026. https://www.woodmac.com/press-releases/india-data-centre-capacity-to-reach-12-gw-by-2030/
 

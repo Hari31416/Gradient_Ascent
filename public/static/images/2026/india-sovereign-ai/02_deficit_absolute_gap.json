@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "y": [
+        "US Today vs India Today",
+        "China 2030 vs India 2030 Opt.",
+        "China 2030 vs India 2030 Cons.",
+        "US 2030 vs India 2030 Opt.",
+        "US 2030 vs India 2030 Cons."
+      ],
+      "x": [51.9, 48.0, 54.8, 88.0, 94.8],
+      "type": "bar",
+      "orientation": "h",
+      "text": [
+        " 51.9 GW Deficit",
+        " 48.0 GW Deficit",
+        " 54.8 GW Deficit",
+        " 88.0 GW Deficit",
+        " 94.8 GW Deficit"
+      ],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "marker": {
+        "color": "#ef4444"
+      }
+    }
+  ],
+  "layout": {
+    "title": "Absolute IT Capacity Deficit Between India and Global Peers",
+    "margin": { "l": 200, "r": 100 },
+    "xaxis": {
+      "automargin": true,
+      "title": "Absolute Capacity Gap (Gigawatts - GW)"
+    },
+    "yaxis": {
+      "automargin": true
+    }
+  }
+}

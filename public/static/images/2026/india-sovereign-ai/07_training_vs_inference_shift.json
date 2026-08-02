@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "y": ["2023", "2025", "2026 (Proj.)"],
+      "x": [67, 50, 33],
+      "name": "Model Training Compute (%)",
+      "type": "bar",
+      "orientation": "h",
+      "text": ["67% Training", "50% Training", "33% Training"],
+      "textposition": "inside",
+      "insidetextanchor": "middle",
+      "textfont": { "color": "#ffffff", "size": 13 },
+      "marker": { "color": "#0284c7" }
+    },
+    {
+      "y": ["2023", "2025", "2026 (Proj.)"],
+      "x": [33, 50, 67],
+      "name": "Model Inference Compute (%)",
+      "type": "bar",
+      "orientation": "h",
+      "text": ["33% Inference", "50% Inference", "67% Inference"],
+      "textposition": "inside",
+      "insidetextanchor": "middle",
+      "textfont": { "color": "#ffffff", "size": 13 },
+      "marker": { "color": "#10b981" }
+    }
+  ],
+  "layout": {
+    "title": "AI Workload Shift: Frontier Training vs Scale Inference (2023–2026)",
+    "barmode": "stack",
+    "margin": { "l": 120, "r": 50, "t": 60, "b": 60 },
+    "xaxis": {
+      "title": "Share of Global AI Compute Volume (%)",
+      "range": [0, 100],
+      "automargin": true
+    },
+    "yaxis": {
+      "type": "category",
+      "categoryorder": "array",
+      "categoryarray": ["2023", "2025", "2026 (Proj.)"],
+      "automargin": true
+    }
+  }
+}

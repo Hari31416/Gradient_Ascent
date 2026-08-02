@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "x": [
+        "United States",
+        "China",
+        "European Union",
+        "India (Optimistic)",
+        "India (Conservative)"
+      ],
+      "y": [53.7, 32.0, 12.0, 1.8, 1.8],
+      "name": "Current Installed Capacity (2025/26)",
+      "type": "bar",
+      "text": ["53.7 GW", "32.0 GW", "12.0 GW", "1.8 GW", "1.8 GW"],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "marker": {
+        "color": "#1d4ed8"
+      }
+    },
+    {
+      "x": [
+        "United States",
+        "China",
+        "European Union",
+        "India (Optimistic)",
+        "India (Conservative)"
+      ],
+      "y": [100.0, 60.0, 27.5, 12.0, 5.25],
+      "name": "2030 Projected Capacity",
+      "text": ["100.0 GW", "60.0 GW", "27.5 GW", "12.0 GW", "5.25 GW"],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "type": "bar",
+      "marker": {
+        "color": "#ea580c"
+      }
+    }
+  ],
+  "layout": {
+    "title": "Sovereign AI Infrastructure Deficit: Data Center Capacity (GW)",
+    "barmode": "group",
+    "margin": { "b": 70 },
+    "xaxis": {
+      "automargin": true
+    },
+    "yaxis": {
+      "automargin": true,
+      "title": "Data Center IT Capacity (GW)"
+    }
+  }
+}

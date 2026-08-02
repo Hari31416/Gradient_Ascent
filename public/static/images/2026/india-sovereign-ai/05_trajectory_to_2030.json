@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "x": [2025, 2026, 2027, 2028, 2029, 2030],
+      "y": [53.7, 65.0, 78.0, 88.0, 95.0, 100.0],
+      "name": "United States (100+ GW)",
+      "type": "scatter",
+      "mode": "lines+markers",
+      "line": { "color": "#6366f1", "width": 3 }
+    },
+    {
+      "x": [2025, 2026, 2027, 2028, 2029, 2030],
+      "y": [32.0, 38.0, 44.0, 50.0, 55.0, 60.0],
+      "name": "China (~60 GW)",
+      "type": "scatter",
+      "mode": "lines+markers",
+      "line": { "color": "#0284c7", "width": 3 }
+    },
+    {
+      "x": [2025, 2026, 2027, 2028, 2029, 2030],
+      "y": [12.0, 15.0, 18.0, 21.0, 24.0, 27.5],
+      "name": "European Union (27.5 GW)",
+      "type": "scatter",
+      "mode": "lines+markers",
+      "line": { "color": "#059669", "width": 3 }
+    },
+    {
+      "x": [2025, 2026, 2027, 2028, 2029, 2030],
+      "y": [1.8, 3.2, 4.8, 6.8, 9.2, 12.0],
+      "name": "India Optimistic (12 GW)",
+      "type": "scatter",
+      "mode": "lines+markers",
+      "line": { "color": "#10b981", "width": 3 }
+    },
+    {
+      "x": [2025, 2026, 2027, 2028, 2029, 2030],
+      "y": [1.8, 2.3, 2.9, 3.6, 4.4, 5.25],
+      "name": "India Conservative (5.25 GW)",
+      "type": "scatter",
+      "mode": "lines+markers",
+      "line": { "color": "#d97706", "width": 3, "dash": "dot" }
+    }
+  ],
+  "layout": {
+    "title": "Data Center IT Capacity Growth Trajectories (2025–2030)",
+    "xaxis": { "title": "Year", "automargin": true },
+    "yaxis": { "title": "IT Power Capacity (GW)", "automargin": true }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "data": [
+    {
+      "x": [
+        "IndiaAI Subsidised<br>(₹65/hr)",
+        "India Commercial<br>(₹115/hr)",
+        "Specialist Cloud<br>(Lambda/RunPod)",
+        "CoreWeave HGX<br>(H100/H200)",
+        "Major Hyperscalers<br>(AWS/Azure)"
+      ],
+      "y": [0.7, 1.24, 3.0, 6.23, 9.0],
+      "type": "bar",
+      "text": ["$0.70", "$1.24", "$3.00", "$6.23", "$9.00"],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "marker": {
+        "color": ["#059669", "#10b981", "#0284c7", "#4f46e5", "#e11d48"]
+      }
+    }
+  ],
+  "layout": {
+    "title": "H100-Class GPU Hourly Compute Cost Comparison (2026)",
+    "margin": { "b": 80, "t": 60 },
+    "xaxis": {
+      "automargin": true,
+      "tickangle": 0
+    },
+    "yaxis": {
+      "automargin": true,
+      "title": "Approximate Rate ($ / GPU-Hour)"
+    }
+  }
+}

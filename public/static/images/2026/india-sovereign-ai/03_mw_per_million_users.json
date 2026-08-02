@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "x": [
+        "United States",
+        "China",
+        "European Union",
+        "India 2030<br>(Opt. 12 GW)",
+        "India<br>(Current)"
+      ],
+      "y": [174.0, 30.5, 30.0, 8.5, 1.5],
+      "type": "bar",
+      "text": ["174.0 MW", "30.5 MW", "30.0 MW", "8.5 MW", "1.5 MW"],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "marker": {
+        "color": ["#6366f1", "#0284c7", "#059669", "#10b981", "#d97706"]
+      }
+    }
+  ],
+  "layout": {
+    "title": "Per-Capita Compute Intensity Disparity",
+    "margin": { "b": 70 },
+    "xaxis": {
+      "automargin": true
+    },
+    "yaxis": {
+      "automargin": true,
+      "title": "Megawatts (MW) per 1 Million Internet Users"
+    }
+  }
+}

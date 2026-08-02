@@ -1,0 +1,83 @@
+{
+  "data": [
+    {
+      "labels": [
+        "United States ($703 B / 84%)",
+        "China ($85 B / 10%)",
+        "European Union ($35 B / 4%)",
+        "India ($10 B / 1.2%)"
+      ],
+      "values": [703, 85, 35, 10],
+      "type": "pie",
+      "hole": 0.45,
+      "name": "Capex Share",
+      "domain": {
+        "x": [0, 0.48],
+        "y": [0, 0.82]
+      },
+      "hoverinfo": "label+value+percent",
+      "textposition": "inside",
+      "marker": {
+        "colors": ["#6366f1", "#0284c7", "#059669", "#d97706"]
+      }
+    },
+    {
+      "labels": [
+        "United States (~76%)",
+        "Rest of World (~13%)",
+        "European Union (~5%)",
+        "China (~5%)",
+        "India (~1%)"
+      ],
+      "values": [76, 13, 5, 5, 1],
+      "type": "pie",
+      "hole": 0.45,
+      "name": "Private VC Share",
+      "domain": {
+        "x": [0.52, 1.0],
+        "y": [0, 0.82]
+      },
+      "hoverinfo": "label+percent",
+      "textposition": "inside",
+      "marker": {
+        "colors": ["#6366f1", "#64748b", "#059669", "#0284c7", "#ef4444"]
+      }
+    }
+  ],
+  "layout": {
+    "margin": {
+      "t": 30,
+      "b": 60,
+      "l": 20,
+      "r": 20
+    },
+    "annotations": [
+      {
+        "text": "<b>Global AI Infrastructure Capex</b>",
+        "x": 0.24,
+        "y": 0.98,
+        "xref": "paper",
+        "yref": "paper",
+        "xanchor": "center",
+        "yanchor": "bottom",
+        "font": {
+          "size": 14
+        },
+        "showarrow": false
+      },
+      {
+        "text": "<b>Private AI Venture Capital Share</b>",
+        "x": 0.76,
+        "y": 0.98,
+        "xref": "paper",
+        "yref": "paper",
+        "xanchor": "center",
+        "yanchor": "bottom",
+        "font": {
+          "size": 14
+        },
+        "showarrow": false
+      }
+    ]
+  }
+}

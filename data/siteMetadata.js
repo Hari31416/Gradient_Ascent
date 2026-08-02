@@ -3,7 +3,7 @@ const siteMetadata = {
   title: 'Gradient Ascent',
   author: 'Harikesh Kushwaha',
   headerTitle: 'Gradient Ascent of Knowledge',
-  description: 'A blog for machine learning, deep learning, and data science enthusiasts.',
+  description: 'Exploring Artificial Intelligence, Machine Learning, and AI Systems.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://hari31416.github.io/Gradient_Ascent/',
